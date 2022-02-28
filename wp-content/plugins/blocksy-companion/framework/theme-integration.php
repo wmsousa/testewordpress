@@ -185,7 +185,9 @@ class ThemeIntegration {
 
 			$users = [];
 
-			foreach (get_users() as $user) {
+			foreach (get_users([
+				'number' => 500
+			]) as $user) {
 				$users[] = [
 					'id' => $user->ID,
 					'name' => $user->user_nicename

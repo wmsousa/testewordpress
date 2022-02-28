@@ -44,11 +44,25 @@ class Blocksy_Dynamic_Css {
 					'forced_call' => true
 				]);
 
-				$response['ct_dynamic_css'] = [
-					'desktop' => $css->build_css_structure(),
-					'tablet' => $tablet_css->build_css_structure(),
-					'mobile' => $mobile_css->build_css_structure()
-				];
+				$desktop_css = $css->build_css_structure();
+				$tablet_css = $tablet_css->build_css_structure();
+				$mobile_css = $mobile_css->build_css_structure();
+
+				$final_css = '';
+
+				if (! empty($desktop_css)) {
+					$final_css .= $desktop_css;
+				}
+
+				if (! empty(trim($tablet_css))) {
+					$final_css .= '@media (max-width: 999.98px) {' . $tablet_css . '}';
+				}
+
+				if (! empty(trim($mobile_css))) {
+					$final_css .= '@media (max-width: 689.98px) {' . $mobile_css . '}';
+				}
+
+				$response['ct_dynamic_css'] = $final_css;
 
 				return $response;
 			},
@@ -83,33 +97,27 @@ class Blocksy_Dynamic_Css {
 		$no_script_url = get_template_directory_uri() . '/static/bundle/no-scripts.min.css';
 		echo "<noscript><link rel='stylesheet' href='" . $no_script_url . "' type='text/css' /></noscript>\n";
 
+		$final_css = '';
+
 		if (! empty($descriptor['styles']['desktop'])) {
+			$final_css .= $descriptor['styles']['desktop'];
+		}
+
+		if (! empty(trim($descriptor['styles']['tablet']))) {
+			$final_css .= '@media (max-width: 999.98px) {' . $descriptor['styles']['tablet'] . '}';
+		}
+
+		if (! empty(trim($descriptor['styles']['mobile']))) {
+			$final_css .= '@media (max-width: 689.98px) {' . $descriptor['styles']['mobile'] . '}';
+		}
+
+		if (! empty($final_css)) {
 			/**
 			 * Note to code reviewers: This line doesn't need to be escaped.
 			 * The variable used here has the value escaped properly.
 			 */
 			echo '<style id="ct-main-styles-inline-css">';
-			echo $descriptor['styles']['desktop'];
-			echo "</style>\n";
-		}
-
-		if (! empty(trim($descriptor['styles']['tablet']))) {
-			/**
-			 * Note to code reviewers: This line doesn't need to be escaped.
-			 * The variable used here has the value escaped properly.
-			 */
-			echo '<style id="ct-main-styles-tablet-inline-css" media="(max-width: 999.98px)">';
-			echo $descriptor['styles']['tablet'];
-			echo "</style>\n";
-		}
-
-		if (! empty(trim($descriptor['styles']['mobile']))) {
-			/**
-			 * Note to code reviewers: This line doesn't need to be escaped.
-			 * The variable used here has the value escaped properly.
-			 */
-			echo '<style id="ct-main-styles-mobile-inline-css" media="(max-width: 689.98px)">';
-			echo $descriptor['styles']['mobile'];
+			echo $final_css;
 			echo "</style>\n";
 		}
 	}
@@ -357,25 +365,10 @@ class Blocksy_Dynamic_Css {
 		return $global_styles_descriptor;
 	}
 
-
 	public function load_backend_dynamic_css() {
 		$css = new Blocksy_Css_Injector();
-		$tablet_css = new Blocksy_Css_Injector([
-			'selector_prefix' => '.ct-tablet-view'
-		]);
-		$mobile_css = new Blocksy_Css_Injector([
-			'selector_prefix' => '.ct-mobile-view'
-		]);
-
-		do_action(
-			'blocksy:admin-dynamic-css:enqueue',
-			[
-				'context' => 'inline',
-				'css' => $css,
-				'tablet_css' => $tablet_css,
-				'mobile_css' => $mobile_css
-			]
-		);
+		$tablet_css = new Blocksy_Css_Injector();
+		$mobile_css = new Blocksy_Css_Injector();
 
 		blocksy_theme_get_dynamic_styles([
 			'name' => 'admin-global',
@@ -390,17 +383,33 @@ class Blocksy_Dynamic_Css {
 		$all_tablet_css = trim($tablet_css->build_css_structure());
 		$all_mobile_css = trim($mobile_css->build_css_structure());
 
-		if (! empty($all_global_css)) {
-			/**
-			 * Note to code reviewers: This line doesn't need to be escaped.
-			 * The variable used here has the value escaped properly.
-			 */
-			echo '<style id="ct-main-styles-inline-css">';
-			echo $all_global_css;
-			echo $all_tablet_css;
-			echo $all_mobile_css;
-			echo "</style>\n";
+		if (empty($all_global_css)) {
+			return;
 		}
+
+		$css = $all_global_css;
+
+		$m = new Blocksy_Fonts_Manager();
+		$maybe_google_fonts_url = $m->load_editor_fonts();
+
+		if (! empty($maybe_google_fonts_url)) {
+			$css = "@import url('" . $maybe_google_fonts_url . "');\n" . $css;
+		}
+
+		if (! empty($all_tablet_css)) {
+			$css .= "\n@media (max-width: 800px) {\n";
+			$css .= $all_tablet_css;
+			$css .= "}\n";
+		}
+
+		if (! empty($all_mobile_css)) {
+			$css .= "\n@media (max-width: 370px) {\n";
+			$css .= $all_mobile_css;
+			$css .= "}\n";
+		}
+		echo '<style id="ct-main-styles-inline-css">';
+		echo $css;
+		echo "</style>\n";
 	}
 }
 

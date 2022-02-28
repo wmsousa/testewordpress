@@ -135,7 +135,7 @@ class Blocksy_Fonts_Manager {
 		);
 
 		if (! $has_dynamic_google_fonts) {
-			return;
+			return '';
 		}
 
 		$dynamic_styles_descriptor = blocksy_manager()
@@ -146,10 +146,7 @@ class Blocksy_Fonts_Manager {
 
 		$url = $this->get_google_fonts_url($matching_google_fonts);
 
-		if (! empty($url)) {
-			wp_register_style('blocksy-fonts-font-source-google', $url);
-			wp_enqueue_style('blocksy-fonts-font-source-google');
-		}
+		return $url;
 	}
 
 	private function get_google_fonts_url($to_enqueue = []) {
@@ -492,10 +489,14 @@ if (! function_exists('blocksy_output_font_css')) {
 					$args['font_value']['family'] = "'" . $args['font_value']['family'] . "'";
 				}
 
-				$args['font_value']['family'] .= ", " . get_theme_mod(
+				$font_family_fallback = get_theme_mod(
 					'font_family_fallback',
 					'Sans-Serif'
 				);
+
+				if (! empty($font_family_fallback)) {
+					$args['font_value']['family'] .= ", " . $font_family_fallback;
+				}
 			}
 		}
 

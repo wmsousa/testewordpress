@@ -29,6 +29,7 @@ export const handleBackgroundOptionFor = ({
 	addToDescriptors = {},
 
 	conditional_var = false,
+	forced_background_image = false,
 }) => ({
 	[id]: [
 		{
@@ -45,6 +46,10 @@ export const handleBackgroundOptionFor = ({
 					cb: (value) => {
 						if (conditional_var) {
 							return `var(${conditional_var}, ${value.backgroundColor.default.color})`
+						}
+
+						if (!value) {
+							return 'CT_CSS_SKIP_RULE'
 						}
 
 						return value.backgroundColor.default.color
@@ -73,8 +78,12 @@ export const handleBackgroundOptionFor = ({
 						patternColor,
 						backgroundColor,
 						overlayColor,
-					}) => {
+					} = {}) => {
 						if (background_type === 'color') {
+							if (forced_background_image) {
+								return 'none'
+							}
+
 							return 'CT_CSS_SKIP_RULE'
 						}
 
@@ -99,7 +108,9 @@ export const handleBackgroundOptionFor = ({
 						}
 
 						let opacity = 1
-						let color = patternColor.default.color
+						let color = patternColor
+							? patternColor.default.color
+							: ''
 
 						if (color.indexOf('paletteColor1') > -1) {
 							color = getComputedStyle(
@@ -190,14 +201,16 @@ export const handleBackgroundOptionFor = ({
 				withResponsive({
 					value: valueExtractor(value),
 					responsive,
-					cb: ({ background_type, background_image: { x, y } }) => {
+					cb: ({ background_type, background_image } = {}) => {
 						if (background_type !== 'image') {
 							return 'CT_CSS_SKIP_RULE'
 						}
 
 						return `${Math.round(
-							parseFloat(x) * 100
-						)}% ${Math.round(parseFloat(y) * 100)}%`
+							parseFloat(background_image.x || 0) * 100
+						)}% ${Math.round(
+							parseFloat(background_image.y || 0) * 100
+						)}%`
 					},
 				}),
 		},
@@ -215,7 +228,7 @@ export const handleBackgroundOptionFor = ({
 				withResponsive({
 					value: valueExtractor(value),
 					responsive,
-					cb: ({ background_type, background_size }) => {
+					cb: ({ background_type, background_size } = {}) => {
 						if (background_type !== 'image') {
 							return 'CT_CSS_SKIP_RULE'
 						}
@@ -238,7 +251,7 @@ export const handleBackgroundOptionFor = ({
 				withResponsive({
 					value: valueExtractor(value),
 					responsive,
-					cb: ({ background_type, background_attachment }) => {
+					cb: ({ background_type, background_attachment } = {}) => {
 						if (background_type !== 'image') {
 							return 'CT_CSS_SKIP_RULE'
 						}
@@ -259,7 +272,7 @@ export const handleBackgroundOptionFor = ({
 				withResponsive({
 					value: valueExtractor(value),
 					responsive,
-					cb: ({ background_type, background_repeat }) => {
+					cb: ({ background_type, background_repeat } = {}) => {
 						if (background_type !== 'image') {
 							return 'CT_CSS_SKIP_RULE'
 						}

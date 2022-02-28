@@ -266,7 +266,6 @@ if (! function_exists('blocksy_output_single_background_css')) {
 
 		$image_url = 'CT_CSS_SKIP_RULE';
 
-
 		if ($backgroundColor['default'] !== 'CT_CSS_SKIP_RULE') {
 			$image_url = 'none';
 		}

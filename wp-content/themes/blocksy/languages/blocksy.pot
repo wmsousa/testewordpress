@@ -194,8 +194,8 @@ msgstr ""
 msgid "More"
 msgstr ""
 
-#: inc/manager.php:141, inc/components/menus.php:86,
-#: inc/components/menus.php:76, inc/components/menus.php:231
+#: inc/manager.php:141, inc/components/menus.php:85,
+#: inc/components/menus.php:75, inc/components/menus.php:230
 msgid "Expand dropdown menu"
 msgstr ""
 
@@ -345,12 +345,7 @@ msgstr ""
 msgid "Default image"
 msgstr ""
 
-#: inc/components/menus.php:6, inc/components/menus.php:8,
-#: inc/components/menus.php:10, inc/components/menus.php:12
-msgid "Menu dropdown icon"
-msgstr ""
-
-#: inc/components/menus.php:405, inc/integrations/custom-post-types.php:172,
+#: inc/components/menus.php:404, inc/integrations/custom-post-types.php:172,
 #: inc/options/general/breadcrumbs.php:12, inc/options/general/meta.php:139,
 #: inc/options/general/page-title.php:672,
 #: inc/options/posts/woo-general.php:314,
@@ -692,7 +687,7 @@ msgstr ""
 msgid "Joined"
 msgstr ""
 
-#: inc/single/single-helpers.php:347, inc/single/single-helpers.php:441
+#: inc/single/single-helpers.php:347, inc/single/single-helpers.php:443
 msgid "Articles"
 msgstr ""
 
@@ -5537,6 +5532,10 @@ msgstr ""
 msgid "Select logo"
 msgstr ""
 
+#: static/js/options/options/ct-multi-image-uploader.js:106
+msgid "Add/Edit Gallery"
+msgstr ""
+
 #: static/js/options/options/ct-ratio.js:216
 msgid ""
 "Use this online %stool%s for calculating a custom image ratio based on your "
@@ -5566,6 +5565,10 @@ msgstr ""
 
 #: static/js/options/options/ct-select.js:276
 msgid "Select value..."
+msgstr ""
+
+#: static/js/options/options/ct-typography.js:166
+msgid "Default Family"
 msgstr ""
 
 #: static/js/options/options/ct-typography.js:189

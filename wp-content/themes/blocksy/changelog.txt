@@ -1,3 +1,32 @@
+1.8.19: 2022-02-18
+- Improvement: Menu dropdowns on touch devices
+- Improvement: Accessibility improvement for WooCommerce cards type 2
+
+1.8.18: 2022-02-17
+- Improvement: WPML copy post meta values on translated posts
+- Improvement: Revert to default state option
+- Fix: Form checkboxes checked state issue
+
+1.8.17: 2022-02-16
+- Improvement: WooCommerce gallery zoom issue with really small images
+- Improvement: Archive cards excerpt functionality
+- Improvement: Share box type 2 alignment option
+- Improvement: Minor menu accessibility improvements
+- Improvement: Better integration with WPC Frequently Bought Together plugin
+- Improvement: WordPress 5.9 - better handle block widgets in Customizer
+- Improvement: Allow line breaks in author bio box
+- Improvement: Add `http` or `https` automatically in social links option
+- Improvement: Better sync of styles in Gutenberg editor with 5.9
+- Improvement: WooCommerce order review column sticky position
+- Improvement: Grid block "Choose Layout" dialog out of bounds in block editor
+- Fix: Header transparent state background color when set to gradient
+- Fix: Removing font fallback breaks the font stack
+- Fix: Color picker input field not detecting the correct color format
+- Fix: Mobile menu divider/border issue when Interactive Collapse option is disabled
+- Fix: Sticky logo shrink breaks header row shrink calculations
+- Fix: Menu drop downs do not work consistently on iPad (desktop view)
+- Fix: Woo variations border issue
+
 1.8.16: 2022-01-21
 - Fix: Trailing comma in button options
 

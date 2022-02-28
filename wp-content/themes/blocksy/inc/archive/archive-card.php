@@ -198,39 +198,7 @@ if (! function_exists('blocksy_render_archive_card')) {
 			'background'
 		);
 
-		$outputs = apply_filters('blocksy:archive:render-card-layers', [
-			'title' => blocksy_entry_title(blocksy_default_akg('heading_tag', $title_settings, 'h2')),
-			'featured_image' => (!get_the_post_thumbnail(
-				$featured_image_args['attachment_id']
-			) && !wp_get_attachment_image_url($featured_image_args['attachment_id'])) ? '' : blocksy_image($featured_image_args),
-			'excerpt' => blocksy_entry_excerpt(
-				intval(
-					blocksy_default_akg( 'excerpt_length', $excerpt_settings, '40' )
-				),
-				'entry-excerpt',
-				null,
-				blocksy_default_akg(
-					'excerpt_source',
-					$excerpt_settings,
-					'excerpt'
-				)
-			),
-
-			'read_more' => blocksy_html_tag(
-				'a',
-				[
-					'class' => 'entry-button' . (
-						$button_type === 'background' ? ' ct-button' : ''
-					),
-					'data-type' => $button_type,
-					'data-alignment' => blocksy_default_akg( 'read_more_alignment', $read_more_settings, 'left' ),
-					'href' => esc_url( get_permalink() )
-				],
-				$read_more_text
-			),
-
-			'divider' => '<div class="entry-divider"></div>'
-		], $args['prefix']);
+		$outputs = null;
 
 		$data_reveal_output = '';
 
@@ -326,6 +294,42 @@ if (! function_exists('blocksy_render_archive_card')) {
 						'meta_divider' => blocksy_akg('meta_divider', $single_component, 'slash')
 					]
 				);
+			}
+
+			if (! $outputs) {
+				$outputs = apply_filters('blocksy:archive:render-card-layers', [
+					'title' => blocksy_entry_title(blocksy_default_akg('heading_tag', $title_settings, 'h2')),
+					'featured_image' => (!get_the_post_thumbnail(
+						$featured_image_args['attachment_id']
+					) && !wp_get_attachment_image_url($featured_image_args['attachment_id'])) ? '' : blocksy_image($featured_image_args),
+					'excerpt' => blocksy_entry_excerpt(
+						intval(
+							blocksy_default_akg( 'excerpt_length', $excerpt_settings, '40' )
+						),
+						'entry-excerpt',
+						null,
+						blocksy_default_akg(
+							'excerpt_source',
+							$excerpt_settings,
+							'excerpt'
+						)
+					),
+
+					'read_more' => blocksy_html_tag(
+						'a',
+						[
+							'class' => 'entry-button' . (
+								$button_type === 'background' ? ' ct-button' : ''
+							),
+							'data-type' => $button_type,
+							'data-alignment' => blocksy_default_akg( 'read_more_alignment', $read_more_settings, 'left' ),
+							'href' => esc_url( get_permalink() )
+						],
+						$read_more_text
+					),
+
+					'divider' => '<div class="entry-divider"></div>'
+				], $args['prefix']);
 			}
 
 			if (isset($outputs[$single_component['id']])) {

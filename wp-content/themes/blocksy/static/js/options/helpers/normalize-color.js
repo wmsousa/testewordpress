@@ -7,8 +7,12 @@ export const normalizeColor = (color) => {
 		return color
 	}
 
+	if (color[0] === '#' && color.length <= 7) {
+		return color
+	}
+
 	if (parsedColor.rgba.a === 1) {
-		return parsedColor.toHex()
+		return color
 	}
 
 	return parsedColor.toRgbString()

@@ -4,9 +4,21 @@ add_filter(
 	'do_shortcode_tag',
 	function ($output, $tag, $attr, $m) {
 		if ($tag === 'woocommerce_my_account') {
+			$endpoint = WC()->query->get_current_endpoint();
+
+			$unauthorized_class = 'ct-woo-unauthorized';
+
+			if (
+				$endpoint === 'lost-password'
+				&&
+				empty($_GET['show-reset-form'])
+			) {
+				$unauthorized_class .= ' ct-request-password-screen';
+			}
+
 			return str_replace(
 				'class="woocommerce"',
-				'class="woocommerce ' . (is_user_logged_in() ? 'ct-woo-account' : 'ct-woo-unauthorized') . '"',
+				'class="woocommerce ' . (is_user_logged_in() ? 'ct-woo-account' : $unauthorized_class) . '"',
 				$output
 			);
 		}

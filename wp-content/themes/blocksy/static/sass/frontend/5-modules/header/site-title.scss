@@ -51,7 +51,7 @@
 }
 
 [data-sticky*='yes'] .sticky-logo {
-	display: block;
+	display: initial;
 
 	~ .default-logo {
 		display: none;

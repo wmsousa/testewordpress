@@ -271,7 +271,8 @@ add_action($action_to_hook, function () {
 							'woocommerce_loop_product_link',
 							get_permalink($product->get_id()),
 							$product
-						)
+						),
+						'aria-label' => $product->get_name(),
 					],
 					'display_video' => $has_archive_video_thumbnail === 'yes'
 				]);

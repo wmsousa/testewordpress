@@ -1,0 +1,81 @@
+/* Kit 96 Custom Styles - classes are added to the Advanced tab of the element they affect */
+
+
+/* Hover Effect For Image Gallery */
+.envato-kit-96-gallery .elementor-image-gallery .gallery-item img{
+	transition: all 0.5s ease;
+	min-height: 320px;
+}
+.envato-kit-96-gallery .elementor-image-gallery .gallery-item img:hover{
+	transform: scale(1.05);
+	box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+/* Thin Progress Bar */
+.envato-kit-96-thin-bar:not(:last-child){
+	margin-bottom:10px;
+}
+
+.envato-kit-96-thin-bar .elementor-progress-wrapper{
+	height: 28px;
+	line-height: 20px;
+
+}
+.envato-kit-96-thin-bar .elementor-progress-text{
+		font-family: monospace;
+	font-size: 1rem !important;
+}
+/* Hover Effect For Image Box */
+.envato-kit-96-imagebox img{
+	transition: all 0.5s ease;
+}
+.envato-kit-96-imagebox img:hover{
+	transform: scale(1.05);
+	box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+/* Custom Newsletter Form */
+.envato-kit-96-newsletter-form .elementor-form-fields-wrapper{
+	display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.envato-kit-96-newsletter-form .elementor-form-fields-wrapper .elementor-field-group-email{
+	width:68%;
+}
+
+.envato-kit-96-newsletter-form .elementor-form-fields-wrapper .elementor-field-type-submit{
+	width: 30%;
+  justify-content: flex-start;
+  margin-left: 10px;
+}
+
+@media(max-width:767px){
+		.envato-kit-96-newsletter-form .elementor-form-fields-wrapper .elementor-field-group-email,
+	.envato-kit-96-newsletter-form .elementor-form-fields-wrapper .elementor-field-type-submit{
+		width: 100%;
+		justify-content: center;
+	}
+}
+
+/* Line Style Form */
+.envato-kit-96-line-form .elementor-field-textual{
+	padding-left:0;
+}
+
+/* Rotate Left Arrow */
+@media(max-width: 767px){
+	.envato-kit-96-arrow{
+		transform: rotate(90deg);
+	}
+}
+
+/* Pricing Border */
+.envato-kit-96-pricing-border{
+	border: 1px solid #eee;
+}
+.envato-kit-96-pricing-shadow{
+	border: 1px solid #f8f8f8;
+	box-shadow: 0 0 20px rgba(0,0,0,.08);
+}

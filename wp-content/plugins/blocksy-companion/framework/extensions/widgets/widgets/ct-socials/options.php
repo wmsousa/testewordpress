@@ -24,13 +24,15 @@ $options = [
 		'label' => false,
 		'manageable' => true,
 		'desc' => sprintf(
-			__( 'You can configure social URLs in %s.', 'blocksy-companion' ),
+			// translators: placeholder here means the actual URL.
+			__( 'Configure the social links in Customizer ➝ General ➝ %sSocial Network Accounts%s.', 'blocksy-companion' ),
 			sprintf(
-				'<a href="%s" target="_blank">%s</a>',
-				admin_url('/customize.php?autofocus[section]=social_accounts'),
-				__('Customizer', 'blocksy-companion')
-			)
+				'<a href="%s" data-trigger-section="general:social_section_options" target="_blank">',
+				admin_url('/customize.php?autofocus[section]=general&ct_autofocus=general:social_section_options')
+			),
+			'</a>'
 		),
+
 		'value' => [
 			[
 				'id' => 'facebook',

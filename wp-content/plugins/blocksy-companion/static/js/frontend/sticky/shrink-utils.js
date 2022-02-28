@@ -34,34 +34,34 @@ export const getRowStickyHeight = (el) => {
 	let rowStickyHeight = getRowInitialHeight(el)
 	let finalInitialHeight = 0
 
-	if (el.querySelector('.site-logo-container')) {
-		let computedLogo = getComputedStyle(
-			el.querySelector('.site-logo-container')
-		)
+	// if (el.querySelector('.site-logo-container')) {
+	// 	let computedLogo = getComputedStyle(
+	// 		el.querySelector('.site-logo-container')
+	// 	)
 
-		let logoInitialHeight = parseFloat(
-			computedLogo.getPropertyValue('--logo-max-height') || '50px'
-		)
+	// 	let logoInitialHeight = parseFloat(
+	// 		computedLogo.getPropertyValue('--logo-max-height') || '50px'
+	// 	)
 
-		let logoStickyShrink = parseFloat(
-			computedLogo.getPropertyValue('--logo-sticky-shrink') || '1'
-		)
+	// 	let logoStickyShrink = parseFloat(
+	// 		computedLogo.getPropertyValue('--logo-sticky-shrink') || '1'
+	// 	)
 
-		if (logoStickyShrink < 1) {
-			let rowInitialMinHeight = getRowInitialMinHeight(el)
+	// 	if (logoStickyShrink < 1) {
+	// 		let rowInitialMinHeight = getRowInitialMinHeight(el)
 
-			if (maybeShrink) {
-				rowInitialMinHeight *= parseFloat(maybeShrink) / 100
-			}
+	// 		if (maybeShrink) {
+	// 			rowInitialMinHeight *= parseFloat(maybeShrink) / 100
+	// 		}
 
-			let logoStickyHeight = logoInitialHeight * logoStickyShrink
+	// 		let logoStickyHeight = logoInitialHeight * logoStickyShrink
 
-			let finalInitialHeight =
-				rowStickyHeight - logoInitialHeight + logoStickyHeight
+	// 		let finalInitialHeight =
+	// 			rowStickyHeight - logoInitialHeight + logoStickyHeight
 
-			return Math.max(rowInitialMinHeight, finalInitialHeight)
-		}
-	}
+	// 		return Math.max(rowInitialMinHeight, finalInitialHeight)
+	// 	}
+	// }
 
 	if (maybeShrink) {
 		rowStickyHeight *= parseFloat(maybeShrink) / 100

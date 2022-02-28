@@ -1,20 +1,12 @@
 :root {
-	// conditions
-	--true: initial;
-	--false: ;
-}
-
-.ct-theme-editor-styles .block-editor-writing-flow {
 	color: var(--color);
-	// background-color: var(--has-boxed, var(--background-color));
-	// background-image: var(--has-boxed, var(--background-image));
-	// background-size: var(--has-boxed, var(--background-size));
-	// background-repeat: var(--has-boxed, var(--background-repeat));
-	// background-position: var(--has-boxed, var(--background-position));
-	// background-attachment: var(--has-boxed, var(--background-attachment));
 	box-shadow: var(--has-boxed, var(--box-shadow));
 	border-radius: var(--has-boxed, var(--border-radius));
 	padding: var(--has-boxed, var(--boxed-content-spacing));
+
+	// conditions
+	--true: initial;
+	--false: ;
 
 	// link color
 	a {

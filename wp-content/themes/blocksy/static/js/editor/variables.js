@@ -17,6 +17,7 @@ export const gutenbergVariables = {
 		},
 		valueExtractor: ({ background }) => {
 			if (
+				!background.desktop &&
 				!isContentBlock &&
 				background.background_type === 'color' &&
 				background.backgroundColor.default.color &&
@@ -44,7 +45,7 @@ export const gutenbergVariables = {
 		],
 		[
 			{
-				selector: `.block-editor-writing-flow`,
+				selector: `.editor-styles-wrapper`,
 				variable: 'has-boxed',
 				responsive: true,
 				extractValue: ({
@@ -94,7 +95,7 @@ export const gutenbergVariables = {
 			},
 
 			{
-				selector: `.block-editor-writing-flow`,
+				selector: `.editor-styles-wrapper`,
 				variable: 'has-wide',
 				responsive: true,
 				extractValue: ({
@@ -145,7 +146,7 @@ export const gutenbergVariables = {
 
 			...handleBackgroundOptionFor({
 				id: 'background',
-				selector: '.block-editor-writing-flow',
+				selector: '.editor-styles-wrapper',
 				responsive: true,
 				conditional_var: '--has-boxed',
 				addToDescriptors: {
@@ -191,7 +192,7 @@ export const gutenbergVariables = {
 			}).background,
 
 			{
-				selector: '.block-editor-writing-flow',
+				selector: '.editor-styles-wrapper',
 				type: 'spacing',
 				variable: 'boxed-content-spacing',
 				responsive: true,
@@ -219,7 +220,7 @@ export const gutenbergVariables = {
 			},
 
 			{
-				selector: '.block-editor-writing-flow',
+				selector: '.editor-styles-wrapper',
 				type: 'spacing',
 				variable: 'border-radius',
 				responsive: true,
@@ -247,7 +248,7 @@ export const gutenbergVariables = {
 			},
 
 			{
-				selector: '.block-editor-writing-flow',
+				selector: '.editor-styles-wrapper',
 				type: 'box-shadow',
 				variable: 'box-shadow',
 				responsive: true,

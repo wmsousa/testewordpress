@@ -39,6 +39,11 @@ add_action('after_setup_theme', function () {
 	add_theme_support('fl-theme-builder-footers');
 	add_theme_support('fl-theme-builder-parts');
 
+	add_theme_support('editor-styles');
+	// Trick editor into loading inline styles. See my_theme_pre_http_request_block_editor_customizer_styles()
+	add_editor_style('https://my-theme-block-editor-customizer-styles');
+	add_editor_style('static/bundle/editor-styles.min.css');
+
 	add_theme_support(
 		'editor-gradient-presets',
 		[

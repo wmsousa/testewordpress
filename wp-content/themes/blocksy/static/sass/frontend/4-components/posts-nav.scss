@@ -62,7 +62,7 @@
 
 	.nav-item-prev {
 		figure {
-			margin-right: var(--thumb-margin, 25px);
+			margin-inline-end: var(--thumb-margin, 25px);
 		}
 
 		svg {
@@ -71,11 +71,11 @@
 	}
 
 	.nav-item-next {
-		text-align: right;
+		text-align: end;
 		justify-content: flex-end;
 
 		figure {
-			margin-left: var(--thumb-margin, 25px);
+			margin-inline-start: var(--thumb-margin, 25px);
 		}
 
 		svg {

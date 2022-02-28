@@ -46,11 +46,7 @@ $attr['aria-label'] = $login_label;
 
 echo '<a ' . blocksy_attr_to_html($attr) . '>';
 
-if (
-	blocksy_some_device($loggedout_account_label_visibility)
-	||
-	is_customize_preview()
-) {
+if (! empty($login_label)) {
 	echo '<span class="' . trim('ct-label ' . blocksy_visibility_classes(
 		$loggedout_account_label_visibility
 	)) . '">';

@@ -3,7 +3,7 @@ import {
 	Component,
 	useState,
 	useContext,
-	Fragment
+	Fragment,
 } from '@wordpress/element'
 
 import cls from 'classnames'
@@ -19,15 +19,15 @@ const InvisiblePanels = ({ builderValue, builderValueDispatch }) => {
 	const { panelsState, panelsActions } = useContext(DragDropContext)
 
 	const primaryItems = allItems.filter(
-		({ id }) => !secondaryItems.find(item => item.id === id)
+		({ id }) => !secondaryItems.find((item) => item.id === id)
 	)
 
 	return (
 		<Fragment>
-			{primaryItems.map(primaryItem => {
+			{primaryItems.map((primaryItem) => {
 				const option = {
 					label: primaryItem.config.name,
-					'inner-options': primaryItem.options
+					'inner-options': primaryItem.options,
 				}
 
 				const id = `builder_panel_${primaryItem.id}`
@@ -58,7 +58,7 @@ const InvisiblePanels = ({ builderValue, builderValueDispatch }) => {
 													.reduce(
 														(allItems, current) => [
 															...allItems,
-															current
+															current,
 														],
 														[]
 													)
@@ -80,9 +80,9 @@ const InvisiblePanels = ({ builderValue, builderValueDispatch }) => {
 															items_per_row: maybeRow.columns.length.toString(),
 															has_widget_areas: hasWidgetAreas
 																? 'yes'
-																: 'no'
+																: 'no',
 													  }
-													: {})
+													: {}),
 											}
 										}
 
@@ -99,9 +99,9 @@ const InvisiblePanels = ({ builderValue, builderValueDispatch }) => {
 														items_per_row: maybeRow.columns.length.toString(),
 														has_widget_areas: hasWidgetAreas
 															? 'yes'
-															: 'no'
+															: 'no',
 												  }
-												: {})
+												: {}),
 										}
 									}}
 									option={option}
@@ -125,8 +125,8 @@ const InvisiblePanels = ({ builderValue, builderValueDispatch }) => {
 																primaryItem.options,
 																{}
 														  )
-														: {}
-											}
+														: {},
+											},
 										})
 									}}
 									view="simple"

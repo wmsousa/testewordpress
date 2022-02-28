@@ -104,15 +104,59 @@ export const getSingleShareBoxVariables = () =>
 							},
 						],
 
-						[`${prefix}_share_box_alignment`]: {
-							selector: applyPrefixFor(
-								'.ct-share-box[data-type="type-2"]',
-								prefix
-							),
-							variable: 'horizontal-alignment',
-							responsive: true,
-							unit: '',
-						},
+						[`${prefix}_share_box_alignment`]: [
+							{
+								selector: applyPrefixFor(
+									'.ct-share-box[data-type="type-2"]',
+									prefix
+								),
+								variable: 'text-horizontal-alignment',
+								responsive: true,
+								unit: '',
+							},
+
+							{
+								selector: applyPrefixFor(
+									'.ct-share-box[data-type="type-2"]',
+									prefix
+								),
+								variable: 'horizontal-alignment',
+								responsive: true,
+								unit: '',
+								extractValue: (value) => {
+									if (!value.desktop) {
+										return value
+									}
+
+									if (value.desktop === 'left') {
+										value.desktop = 'flex-start'
+									}
+
+									if (value.desktop === 'right') {
+										value.desktop = 'flex-end'
+									}
+
+									if (value.tablet === 'left') {
+										value.tablet = 'flex-start'
+									}
+
+									if (value.tablet === 'right') {
+										value.tablet = 'flex-end'
+									}
+
+									if (value.mobile === 'left') {
+										value.mobile = 'flex-start'
+									}
+
+									if (value.mobile === 'right') {
+										value.mobile = 'flex-end'
+									}
+
+									return value
+								},
+							},
+						],
+
 
 						[`${prefix}_share_items_background`]: [
 							{

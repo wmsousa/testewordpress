@@ -9,11 +9,11 @@ table.shop_table {
 
 		> * {
 			&:first-child {
-				padding-left: 0;
+				padding-inline-start: 0;
 			}
 
 			&:last-child {
-				padding-right: 0;
+				padding-inline-end: 0;
 			}
 		}
 	}
@@ -107,7 +107,7 @@ table.shop_table {
 	// product name
 	[class*="product-name"] {
 		@include media-breakpoint-down (md) {
-			padding-right: 0;
+			padding-inline-end: 0;
 		}
 
 		.price {
@@ -126,8 +126,8 @@ table.shop_table {
 		margin-top: 1em;
 
 		.remove {
-			margin-left: auto;
-			padding-left: 10px;
+			margin-inline-start: auto;
+			padding-inline-start: 10px;
 		}
 	}
 
@@ -150,7 +150,7 @@ table.shop_table {
 	// product remove button
 	[class*="product-remove"] {
 		width: 20px;
-		text-align: right;
+		text-align: end;
 	}
 
 	.remove {

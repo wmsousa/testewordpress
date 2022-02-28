@@ -413,6 +413,12 @@ var options = {
 		},
 
 		{
+			input: 'static/sass/backend/editor/blocks/main.scss',
+			output: 'static/bundle',
+			filename: 'editor-styles.min',
+		},
+
+		{
 			input: 'static/sass/backend/customizer/main.scss',
 			output: 'static/bundle',
 			filename: 'customizer-controls.min',

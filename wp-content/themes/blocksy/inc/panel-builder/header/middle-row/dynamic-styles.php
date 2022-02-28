@@ -310,7 +310,8 @@ if (isset($has_transparent_header) && $has_transparent_header) {
 			])),
 
 			'value' => $rowBackgroundValue,
-			'responsive' => true
+			'responsive' => true,
+			'forced_background_image' => true
 		]);
 	}
 
@@ -333,7 +334,8 @@ if (isset($has_transparent_header) && $has_transparent_header) {
 			),
 
 			'value' => $containerBackgroundValue,
-			'responsive' => true
+			'responsive' => true,
+			'forced_background_image' => true
 		]);
 	}
 

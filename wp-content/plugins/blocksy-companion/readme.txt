@@ -5,7 +5,7 @@ Requires PHP: 7.0
 Tested up to: 5.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.8.17
+Stable tag: 1.8.19
 
 == Description ==
 
@@ -23,6 +23,15 @@ It runs and adds its enhancements only if the Blocksy theme is installed and act
 2. Activate the plugin by going to **Plugins** page in WordPress admin and clicking on **Activate** link.
 
 == Changelog ==
+1.8.19: 2022-02-18
+- Improvement: Do not load all users in conditions to avoid memory limit hits
+- Improvement: Remove focus lock from cookies consent popup
+
+1.8.18: 2022-02-16
+- Improvement: Account modal better compatibility with All In One WP Security plugin
+- Improvement: Cookies consent popup focus lock
+- Improvement: Integration with CAPTCHA 4WP in account modal
+
 1.8.17: 2022-01-21
 - Improvement: Product reviews image aspect ratio filter
 - Improvement: Customizer export/import module improvement

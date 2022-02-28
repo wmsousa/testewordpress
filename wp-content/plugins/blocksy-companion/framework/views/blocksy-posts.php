@@ -107,7 +107,8 @@ if (isset($_GET['blocksy_term_id'])) {
 
 $query = new WP_Query(apply_filters(
 	'blocksy:general:shortcodes:blocksy-posts:args',
-	$query_args
+	$query_args,
+	$args
 ));
 
 if (! $query->have_posts() && $args['no_results'] === 'skip') {

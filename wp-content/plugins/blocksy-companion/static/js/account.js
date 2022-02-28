@@ -30,6 +30,10 @@ registerDynamicChunk('blocksy_account', {
 				screen: el.dataset.view || 'login',
 			})
 
+			if (window.anr_onloadCallback) {
+				window.anr_onloadCallback()
+			}
+
 			ctEvents.trigger('ct:overlay:handle-click', {
 				e: event,
 				href: '#account-modal',

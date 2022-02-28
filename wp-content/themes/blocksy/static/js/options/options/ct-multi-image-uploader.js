@@ -103,7 +103,7 @@ export default class MultiImageUploader extends Component {
 								className="button edit-button control-focus"
 								title="Edit"
 								onClick={() => open()}>
-								Add/Edit Gallery
+								{__('Add/Edit Gallery', 'blocksy')}
 							</button>
 						</Fragment>
 					)}

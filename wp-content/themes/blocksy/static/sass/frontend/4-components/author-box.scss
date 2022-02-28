@@ -116,21 +116,24 @@
 		color: var(--color);
 	}
 
+	.author-box-social + .ct-author-box-more {
+		margin-top: 15px;
+	}
+
 	.ct-author-box-more {
 		font-size: 11px;
 		font-weight: 500;
 		text-transform: uppercase;
 		display: inline-flex;
-		margin-top: 15px;
 	}
 }
 
 .author-box-name {
-	margin-bottom: 15px;
+	// margin-bottom: 15px;
 }
 
-.author-box-bio {
-	&:not(:last-child) {
-		margin-bottom: 15px;
-	}
-}
+// .author-box-bio {
+// 	&:not(:last-child) {
+// 		margin-bottom: 15px;
+// 	}
+// }

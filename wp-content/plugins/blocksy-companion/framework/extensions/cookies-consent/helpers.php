@@ -52,10 +52,10 @@ function blocksy_ext_cookies_consent_output($forced = false) {
 				<div class="ct-cookies-content"><?php echo wp_kses_post($content) ?></div>
 			<?php } ?>
 
-			<button type="submit" class="ct-button ct-accept"><?php echo esc_html($button_text) ?></button>
+			<button type="submit" class="ct-button ct-accept" tabindex="10"><?php echo esc_html($button_text) ?></button>
 
 			<?php if ($type === 'type-1' || is_customize_preview()) { ?>
-				<button class="ct-close">×</button>
+				<button class="ct-close" tabindex="10">×</button>
 			<?php } ?>
 
 		</div>

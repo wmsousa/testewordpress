@@ -46,66 +46,62 @@ if (! function_exists('blocksy_entry_excerpt')) {
 		// excerpt | full
 		$source = 'excerpt'
 	) {
+		ob_start();
+		$post_excerpt = get_the_excerpt($post_id);
+		$excerpt_additions = ob_get_clean();
 
-	if ($source === 'excerpt' && empty(trim(get_the_excerpt($post_id)))) {
-		return '';
-	}
+		if ($source === 'excerpt' && empty(trim($post_excerpt))) {
+			return '';
+		}
 
-	$post = get_post($post_id);
+		$post = get_post($post_id);
 
-	$has_native_excerpt = $post->post_excerpt;
+		$has_native_excerpt = $post->post_excerpt;
 
-	$excerpt = null;
+		$excerpt = null;
 
-	if ($source === 'excerpt') {
-		if ($has_native_excerpt) {
-			$excerpt = get_the_excerpt($post_id);
+		if ($source === 'excerpt') {
+			if ($has_native_excerpt) {
+				$excerpt = $post_excerpt;
+				$excerpt = apply_filters('blocksy:excerpt:output', $excerpt);
+			}
+
+			if (! $excerpt) {
+				ob_start();
+				blocksy_trim_excerpt($post_excerpt, $length);
+				$excerpt = ob_get_clean();
+			}
+		}
+
+		if ($source === 'full') {
+			ob_start();
+			the_content(
+				sprintf(
+					wp_kses(
+						/* translators: %s: Name of current post. Only visible to screen readers */
+						__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'blocksy' ),
+						array(
+							'span' => array(
+								'class' => array(),
+							),
+						)
+					),
+					get_the_title()
+				)
+			);
+			$excerpt = ob_get_clean();
+
 			$excerpt = apply_filters('blocksy:excerpt:output', $excerpt);
 		}
 
-		if (! $excerpt) {
-			ob_start();
-			blocksy_trim_excerpt(get_the_excerpt($post_id), $length);
-			$excerpt = ob_get_clean();
-		}
-	}
-
-	if ($source === 'full') {
-		ob_start();
-		the_content(
-			sprintf(
-				wp_kses(
-					/* translators: %s: Name of current post. Only visible to screen readers */
-					__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'blocksy' ),
-					array(
-						'span' => array(
-							'class' => array(),
-						),
-					)
-				),
-				get_the_title()
-			)
+		return blocksy_html_tag(
+			'div',
+			[
+				'class' => esc_attr($class)
+			],
+			$excerpt_additions . do_shortcode($excerpt)
 		);
-		$excerpt = ob_get_clean();
-
-		$excerpt = apply_filters('blocksy:excerpt:output', $excerpt);
 	}
-
-	ob_start();
-
-	?>
-
-	<div class="<?php echo esc_attr($class) ?>">
-		<?php
-			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo do_shortcode($excerpt);
-		?>
-	</div>
-
-	<?php
-
-	return ob_get_clean();
-}
 }
 
 /**

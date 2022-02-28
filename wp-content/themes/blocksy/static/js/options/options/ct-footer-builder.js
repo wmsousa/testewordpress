@@ -128,12 +128,88 @@ const FooterBuilder = ({
 	)
 
 	const builderValueDispatch = useCallback(
-		(payload) =>
-			builderValueDispatchInternal({
-				...payload,
-				onBuilderValueChange,
-			}),
-		[builderValueDispatchInternal, onBuilderValueChange]
+		(action) => {
+			let newState = builderReducer(builderValueCollection, action)
+
+			if (
+				action.type === 'BUILDER_GLOBAL_SETTING_ON_CHANGE' &&
+				wp.customize.previewer
+			) {
+				const builderValue =
+					newState.sections.find(
+						({ id }) => id === newState.__forced_static_footer__
+					) || newState.sections[0]
+
+				const { optionId, optionValue, values = {} } = action.payload
+
+				wp.customize.previewer.send('ct:footer:receive-value-update', {
+					itemId: 'global',
+					optionId,
+					optionValue,
+					values: {
+						...builderValue.settings,
+						[optionId]: optionValue,
+					},
+				})
+			}
+
+			if (
+				action.type === 'ITEM_VALUE_ON_CHANGE' &&
+				wp.customize.previewer
+			) {
+				const {
+					id,
+					optionId,
+					optionValue,
+					values = {},
+				} = action.payload
+
+				const builderValue =
+					newState.sections.find(
+						({ id }) => id === newState.__forced_static_footer__
+					) || newState.sections[0]
+
+				let items = builderValue.items
+
+				const currentItem = items[id] || { values: {} }
+
+				wp.customize.previewer.send('ct:footer:receive-value-update', {
+					itemId: id,
+					optionId,
+					optionValue,
+					values: {
+						...currentItem.values,
+						...values,
+						...(id === 'top-row' ||
+						id === 'middle-row' ||
+						id === 'bottom-row'
+							? {
+									items_per_row: builderValue.rows.find(
+										({ id: _id }) => id === _id
+									).columns.length,
+							  }
+							: {}),
+						...((id === 'top-row' ||
+							id === 'middle-row' ||
+							id === 'bottom-row') &&
+						optionId === 'items_per_row'
+							? {
+									items_per_row: parseInt(optionValue, 10),
+							  }
+							: {}),
+						[optionId]: optionValue,
+					},
+				})
+			}
+
+			onBuilderValueChange(newState)
+			builderValueDispatchInternal(action)
+		},
+		[
+			builderValueDispatchInternal,
+			onBuilderValueChange,
+			builderValueCollection,
+		]
 	)
 
 	const setList = (lists) =>

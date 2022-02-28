@@ -302,14 +302,32 @@ class Blocksy_Screen_Manager {
 			}
 		}
 
-		if (
-			is_search()
-			&&
-			$actual_prefix !== 'woo_categories'
-			&&
-			get_query_var('post_type') !== 'product'
-		) {
+		$actual_post_type = get_query_var('post_type');
+
+		if (empty($actual_post_type) && isset($_GET['ct_post_type'])) {
+			$actual_post_type = explode(':', $_GET['ct_post_type']);
+		}
+
+		if (is_search()) {
 			$actual_prefix = 'search';
+
+			if (
+				is_array($actual_post_type)
+				&&
+				count($actual_post_type) === 1
+				&&
+				$actual_post_type[0] !== 'page'
+			) {
+				if ($actual_post_type[0] === 'post') {
+					$actual_prefix = 'blog';
+				}
+
+				$post_type = blocksy_manager()->post_types->is_supported_post_type();
+
+				if ($post_type) {
+					$actual_prefix = $post_type . '_archive';
+				}
+			}
 		}
 
 		if (is_author()) {

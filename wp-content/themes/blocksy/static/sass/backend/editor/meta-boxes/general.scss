@@ -1,6 +1,9 @@
 .edit-post-layout__metaboxes:not(:empty) {
-	padding: 0 0 24px 0;
 	background: #fff;
+
+	&:not(:last-child) {
+		padding: 0 0 24px 0;
+	}
 
 	.edit-post-meta-boxes-area {
 		margin: auto;

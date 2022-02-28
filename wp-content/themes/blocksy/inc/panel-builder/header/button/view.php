@@ -48,19 +48,16 @@ if (
 		'template_type' => 'popup'
 	])
 ) {
-	$default_popup_id = blocksy_get_default_content_block(null, [
-		'template_type' => 'popup'
-	]);
-
-	$popup_id = blocksy_akg(
-		'header_button_select_popup',
-		$atts,
-		$default_popup_id
+	$popup_id = blocksy_get_default_content_block(
+		blocksy_akg(
+			'header_button_select_popup',
+			$atts,
+			''
+		),
+		[
+			'template_type' => 'popup'
+		]
 	);
-
-	if (! $popup_id) {
-		$popup_id = $default_popup_id;
-	}
 
 	$link = '#ct-popup-' . $popup_id;
 }

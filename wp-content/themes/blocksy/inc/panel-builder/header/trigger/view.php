@@ -40,7 +40,7 @@ $trigger_label_alignment = blocksy_expand_responsive_value(
 	class="<?php echo esc_attr($class) ?>"
 	data-design="<?php echo $trigger_design ?>"
 	data-label="<?php echo $trigger_label_alignment[$device] ?>"
-	aria-label="<?php echo $trigger_label ?>"
+	aria-label="<?php echo __('Open off canvas', 'blocksy') ?>"
 	<?php echo blocksy_attr_to_html($attr) ?>>
 
 	<span class="<?php echo $label_class ?>"><?php echo $trigger_label ?></span>
@@ -48,7 +48,7 @@ $trigger_label_alignment = blocksy_expand_responsive_value(
 	<svg
 		class="ct-icon"
 		width="18" height="14" viewBox="0 0 18 14"
-		aria-label="<?php echo __('Off Canvas trigger icon', 'blocksy') ?>"
+		aria-hidden="true"
 		data-type="<?php echo esc_attr($trigger_type) ?>">
 
 		<rect y="0.00" width="18" height="1.7" rx="1"/>

@@ -92,6 +92,7 @@
 	}
 
 	li,
+	.menu-item-has-children > a,
 	.dropdown-active > .ct-sub-menu-parent {
 		border-bottom: var(--mobile-menu-divider);
 	}

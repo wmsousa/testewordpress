@@ -31,7 +31,7 @@ $options = [
 				'settings' => blocksy_get_social_networks_list(),
 				'desc' => sprintf(
 					// translators: placeholder here means the actual URL.
-					__( 'Configure the social links in General ➝ Layout ➝ %sSocial Network Accounts%s.', 'blocksy' ),
+					__( 'Configure the social links in General ➝ %sSocial Network Accounts%s.', 'blocksy' ),
 					sprintf(
 						'<a data-trigger-section="general:social_section_options" href="%s">',
 						admin_url('/customize.php?autofocus[section]=general&ct_autofocus=general:social_section_options')

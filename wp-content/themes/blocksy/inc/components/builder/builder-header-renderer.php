@@ -381,7 +381,7 @@ class Blocksy_Header_Builder_Render extends Blocksy_Builder_Render {
 		);
 
 		if (! $item) {
-			return $not_registered_label;
+			return '<div class="ct-builder-no-item">' . $not_registered_label . '</div>';
 		}
 
 		$render_args = apply_filters('blocksy:header:item-template-args', [

@@ -16,7 +16,7 @@
 
 	// icons label
 	.ct-label:not([hidden]) {
-		margin-left: 0.7em;
+		margin-inline-start: 0.7em;
 		display: var(--visibility);
 		transition: color 0.12s cubic-bezier(.455,.03,.515,.955);
 	}

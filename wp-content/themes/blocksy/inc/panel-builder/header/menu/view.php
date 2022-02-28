@@ -22,12 +22,26 @@ $attr['data-interaction'] = blocksy_default_akg(
 	'hover'
 );
 
+$menu_args = [
+	'container' => false,
+	'menu_class' => 'menu',
+	'fallback_cb' => 'blocksy_main_menu_fallback',
+	'blocksy_mega_menu' => true,
+	'blocksy_advanced_item' => true
+];
+
 if ($attr['data-interaction'] === 'click') {
-	$attr['data-interaction'] .= ':' . blocksy_default_akg(
+	$dropdown_click_interaction = blocksy_default_akg(
 		'dropdown_click_interaction',
 		$atts,
 		'item'
 	);
+
+	$attr['data-interaction'] .= ':' . $dropdown_click_interaction;
+
+	if ($dropdown_click_interaction === 'item') {
+		$menu_args['skip_ghost'] = true;
+	}
 }
 
 $menu_type = blocksy_default_akg('header_menu_type', $atts, 'type-1');
@@ -41,11 +55,11 @@ $dropdown_items_type = blocksy_default_akg('dropdown_items_type', $atts, 'simple
 
 $dropdown_output = 'data-dropdown="' . $dropdown_animation . ':' . $dropdown_items_type . '"';
 
-$menu_args = [];
 
 $menu = blocksy_default_akg('menu', $atts, 'blocksy_location');
 
 if ($menu === 'blocksy_location') {
+	$menu_args['theme_location'] = $location;
 } else {
 	$menu_args['menu'] = $menu;
 }
@@ -64,20 +78,7 @@ add_filter(
 	10, 4
 );
 
-wp_nav_menu($menu === 'blocksy_location' ? [
-	'container' => false,
-	'menu_class' => 'menu',
-	'fallback_cb' => 'blocksy_main_menu_fallback',
-	'blocksy_mega_menu' => true,
-	'blocksy_advanced_item' => true,
-	'theme_location' => $location
-] : array_merge([
-	'container' => false,
-	'menu_class' => 'menu',
-	'fallback_cb' => 'blocksy_main_menu_fallback',
-	'blocksy_mega_menu' => true,
-	'blocksy_advanced_item' => true,
-], $menu_args));
+wp_nav_menu($menu_args);
 
 remove_filter(
 	'nav_menu_item_title',

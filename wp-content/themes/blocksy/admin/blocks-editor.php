@@ -10,9 +10,6 @@ add_action(
 		$theme = blocksy_get_wp_parent_theme();
 		global $post;
 
-		$m = new Blocksy_Fonts_Manager();
-		$m->load_editor_fonts();
-
 		$options = blocksy_get_options('meta/' . get_post_type($post));
 
 		if (blocksy_manager()->post_types->is_supported_post_type()) {
@@ -269,3 +266,90 @@ add_filter(
 	}
 );
 
+add_filter('tiny_mce_before_init', function ($mceInit) {
+	if (! isset($mceInit['content_css'])) {
+		return $mceInit;
+	}
+
+	$mceInit['content_css'] = str_replace(
+		'https://my-theme-block-editor-customizer-styles',
+		'',
+		$mceInit['content_css']
+	);
+
+	return $mceInit;
+});
+
+add_filter(
+	'pre_http_request',
+	function ($response, $parsed_args, $url) {
+		if ('https://my-theme-block-editor-customizer-styles' !== $url) {
+			return $response;
+		}
+
+		$css = new Blocksy_Css_Injector();
+		$tablet_css = new Blocksy_Css_Injector();
+		$mobile_css = new Blocksy_Css_Injector();
+
+		do_action(
+			'blocksy:admin-dynamic-css:enqueue',
+			[
+				'context' => 'inline',
+				'css' => $css,
+				'tablet_css' => $tablet_css,
+				'mobile_css' => $mobile_css
+			]
+		);
+
+		blocksy_theme_get_dynamic_styles([
+			'name' => 'admin-global',
+			'css' => $css,
+			'tablet_css' => $tablet_css,
+			'mobile_css' => $mobile_css,
+			'context' => 'inline',
+			'chunk' => 'admin',
+			'selector' => 'htmlroot'
+		]);
+
+		$all_global_css = trim($css->build_css_structure());
+		$all_tablet_css = trim($tablet_css->build_css_structure());
+		$all_mobile_css = trim($mobile_css->build_css_structure());
+
+		if (empty($all_global_css)) {
+			return;
+		}
+
+		$css = $all_global_css;
+
+		$m = new Blocksy_Fonts_Manager();
+		$maybe_google_fonts_url = $m->load_editor_fonts();
+
+		if (! empty($maybe_google_fonts_url)) {
+			$css = "@import url('" . $maybe_google_fonts_url . "');\n" . $css;
+		}
+
+		if (! empty($all_tablet_css)) {
+			$css .= "\n@media (max-width: 800px) {\n";
+			$css .= $all_tablet_css;
+			$css .= "}\n";
+		}
+
+		if (! empty($all_mobile_css)) {
+			$css .= "\n@media (max-width: 370px) {\n";
+			$css .= $all_mobile_css;
+			$css .= "}\n";
+		}
+
+		return [
+			'body' => $css,
+			'headers' => new Requests_Utility_CaseInsensitiveDictionary(),
+			'response' => [
+				'code' => 200,
+				'message' => 'OK',
+			],
+			'cookies' => [],
+			'filename' => null,
+		];
+	},
+	10, 3
+);

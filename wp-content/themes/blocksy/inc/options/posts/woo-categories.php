@@ -253,23 +253,6 @@ $options = [
 										'condition' => [ 'shop_cards_type' => 'type-1' ],
 										'options' => [
 
-											// 'shop_cards_alignment_1' => [
-											// 	'type' => 'ct-radio',
-											// 	'label' => __( 'Content Alignment', 'blocksy' ),
-											// 	'value' => 'left',
-											// 	'view' => 'text',
-											// 	'divider' => 'top',
-											// 	'attr' => [ 'data-type' => 'alignment' ],
-											// 	'disableRevertButton' => true,
-											// 	'design' => 'block',
-											// 	'setting' => [ 'transport' => 'postMessage' ],
-											// 	'choices' => [
-											// 		'left' => '',
-											// 		'center' => '',
-											// 		'right' => '',
-											// 	],
-											// ],
-
 											'shop_cards_alignment_1' => [
 												'type' => 'ct-radio',
 												'label' => __( 'Content Alignment', 'blocksy' ),

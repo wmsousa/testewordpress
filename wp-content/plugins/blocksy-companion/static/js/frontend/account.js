@@ -132,6 +132,10 @@ export const handleAccountModal = (el) => {
 
 	el.hasListeners = true
 
+	let maybeLogin = el.querySelector('[name="loginform"]')
+	let maybeRegister = el.querySelector('[name="registerform"]')
+	let maybeLostPassword = el.querySelector('[name="lostpasswordform"]')
+
 	el.addEventListener(
 		'click',
 		(e) => {
@@ -147,7 +151,8 @@ export const handleAccountModal = (el) => {
 
 			if (
 				e.target.href &&
-				e.target.href.indexOf('wp-login') > -1 &&
+				(e.target.href.indexOf('wp-login') > -1 ||
+					(maybeLogin && e.target.href === maybeLogin.action)) &&
 				e.target.href.indexOf('lostpassword') === -1
 			) {
 				activateScreen(el, { screen: 'login' })
@@ -156,10 +161,6 @@ export const handleAccountModal = (el) => {
 		},
 		true
 	)
-
-	let maybeLogin = el.querySelector('[name="loginform"]')
-	let maybeRegister = el.querySelector('[name="registerform"]')
-	let maybeLostPassword = el.querySelector('[name="lostpasswordform"]')
 
 	if (maybeLogin) {
 		maybeLogin.addEventListener('submit', (e) => {

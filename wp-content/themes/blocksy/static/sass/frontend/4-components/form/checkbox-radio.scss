@@ -1,10 +1,10 @@
 $checkbox:
 	'.ct-checkbox',
-	// '.comment-subscription-form input[type="checkbox"]',
 	'.comment-form input[type="checkbox"]',
 	'#ship-to-different-address-checkbox',
 	'.woocommerce-form__input[type="checkbox"]',
 	'#wc-stripe-new-payment-method[type="checkbox"]',
+	'.ppcp-credit-card-vault[type="checkbox"]',
 	'.forminator-ui[data-design="none"] .forminator-checkbox input[type="checkbox"]',
 	'.wpforms-container:not(.wpforms-container-full) input[type="checkbox"]'
 ;
@@ -49,8 +49,10 @@ $radiobox:
 	}
 
 	&:checked {
-		border-color: var(--form-selection-control-accent-color) !important;
-		background: var(--form-selection-control-accent-color) !important;
+		border-color: var(--form-selection-control-accent-color);
+		background: var(--form-selection-control-accent-color);
+		// border-color: var(--form-selection-control-accent-color) !important;
+		// background: var(--form-selection-control-accent-color) !important;
 
 		&:before {
 			opacity: 1;
@@ -59,7 +61,8 @@ $radiobox:
 
 	&:focus {
 		outline: none;
-		border-color: var(--form-selection-control-accent-color) !important;
+		border-color: var(--form-selection-control-accent-color);
+		// border-color: var(--form-selection-control-accent-color) !important;
 	}
 }
 

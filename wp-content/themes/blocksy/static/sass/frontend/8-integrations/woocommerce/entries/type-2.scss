@@ -75,7 +75,6 @@
 		}
 
 		a {
-			--padding: 5px;
 			--buttonFontFamily: var(--fontFamily);
 			--buttonFontSize: 14px;
 			--buttonInitialColor: transparent;
@@ -83,6 +82,7 @@
 			--buttonShadow: none;
 			--buttonTransform: none;
 			--borderRadius: 0;
+			--button-padding: 5px;
 			--button-border: none;
 			--button-border-hover-color: rgba(0, 0, 0, 0.05);
 		}

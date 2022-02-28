@@ -349,7 +349,7 @@ class Blocksy_Footer_Builder_Render extends Blocksy_Builder_Render {
 		);
 
 		if (! $item) {
-			return $not_registered_label;
+			return '<div class="ct-builder-no-item">' . $not_registered_label . '</div>';
 		}
 
 		return blocksy_render_view(

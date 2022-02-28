@@ -72,22 +72,23 @@ const SecondaryItems = ({
 				pull: 'clone',
 			}}
 			draggableId={'available-items'}
-			items={[
-				...secondaryItems.map(({ id }) => id),
-				...allDynamicItems,
-			].sort((a, b) => {
-				const aItemData = ct_customizer_localizations.header_builder_data[
-					'header'
-				].find(({ id }) => id === getOriginalId(a))
-
-				const bItemData = ct_customizer_localizations.header_builder_data[
-					'header'
-				].find(({ id }) => id === getOriginalId(b))
-
-				return aItemData.config.name.localeCompare(
-					bItemData.config.name
+			items={[...secondaryItems.map(({ id }) => id), ...allDynamicItems]
+				.filter((el) =>
+					allItems.some(({ id }) => id === getOriginalId(el))
 				)
-			})}
+				.sort((a, b) => {
+					const aItemData = allItems.find(
+						({ id }) => id === getOriginalId(a)
+					)
+
+					const bItemData = allItems.find(
+						({ id }) => id === getOriginalId(b)
+					)
+
+					return aItemData.config.name.localeCompare(
+						bItemData.config.name
+					)
+				})}
 			hasPointers={false}
 			displayWrapper={displayList}
 			propsForItem={(item) => ({

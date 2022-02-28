@@ -116,6 +116,7 @@ export const getRowBackgroundVariables = ({ itemId }) => {
 				...handleBackgroundOptionFor({
 					id: 'transparentHeaderRowBackground',
 
+					forced_background_image: true,
 					selector: assembleSelector(
 						mutateSelector({
 							selector: getRootSelectorFor({ itemId }),
@@ -145,6 +146,7 @@ export const getRowBackgroundVariables = ({ itemId }) => {
 				...handleBackgroundOptionFor({
 					id: 'transparentHeaderRowBackground',
 
+					forced_background_image: true,
 					selector: assembleSelector(
 						mutateSelector({
 							selector: mutateSelector({

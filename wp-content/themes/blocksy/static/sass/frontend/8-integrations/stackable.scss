@@ -1,27 +1,14 @@
 // version 3
 .wp-block-stackable-button {
-	// --stk-button-padding: 5px 20px;
 	--stk-button-text-color: var(--buttonTextInitialColor);
 	--stk-button-background-color: var(--buttonInitialColor);
-
-	// .stk-button {
-	// 	min-height: var(--buttonMinHeight);
-	// }
 }
 
-.wp-block-stackable-columns.alignfull {
+.wp-block-stackable-columns {
 
-	> .stk-row {
-		
-		&:not(.alignfull) {
-			width: var(--block-width) !important;
-		}
+	&.alignfull > .stk-row:not(.alignfull) {
+		width: var(--block-width) !important;
 	}
-
-	// &.stk-block-background {
-	// 	padding-left: 0;
-	// 	padding-right: 0;
-	// }
 }
 
 

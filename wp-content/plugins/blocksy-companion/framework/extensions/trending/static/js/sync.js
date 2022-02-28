@@ -1,45 +1,51 @@
-import { handleVariablesFor } from 'customizer-sync-helpers'
 import {
 	handleBackgroundOptionFor,
 	responsiveClassesFor,
 	typographyOption,
 } from 'blocksy-customizer-sync'
+import ctEvents from 'ct-events'
 
-handleVariablesFor({
-	trendingBlockContainerSpacing: {
-		selector: '.ct-trending-block',
-		variable: 'padding',
-		responsive: true,
-		unit: '',
-	},
+ctEvents.on(
+	'ct:customizer:sync:collect-variable-descriptors',
+	(allVariables) => {
+		allVariables.result = {
+			...allVariables.result,
+			trendingBlockContainerSpacing: {
+				selector: '.ct-trending-block',
+				variable: 'padding',
+				responsive: true,
+				unit: '',
+			},
 
-	...typographyOption({
-		id: 'trendingBlockPostsFont',
-		selector: '.ct-trending-block .ct-item-title',
-	}),
+			...typographyOption({
+				id: 'trendingBlockPostsFont',
+				selector: '.ct-trending-block .ct-item-title',
+			}),
 
-	trendingBlockFontColor: [
-		{
-			selector: '.ct-trending-block',
-			variable: 'color',
-			type: 'color:default',
-			responsive: true,
-		},
+			trendingBlockFontColor: [
+				{
+					selector: '.ct-trending-block',
+					variable: 'color',
+					type: 'color:default',
+					responsive: true,
+				},
 
-		{
-			selector: '.ct-trending-block',
-			variable: 'linkHoverColor',
-			type: 'color:hover',
-			responsive: true,
-		},
-	],
+				{
+					selector: '.ct-trending-block',
+					variable: 'linkHoverColor',
+					type: 'color:hover',
+					responsive: true,
+				},
+			],
 
-	...handleBackgroundOptionFor({
-		id: 'trending_block_background',
-		selector: '.ct-trending-block',
-		responsive: true,
-	}),
-})
+			...handleBackgroundOptionFor({
+				id: 'trending_block_background',
+				selector: '.ct-trending-block',
+				responsive: true,
+			}),
+		}
+	}
+)
 
 wp.customize('trending_block_visibility', (value) =>
 	value.bind((to) =>

@@ -101,7 +101,7 @@ blocksy_output_responsive([
 	'css' => $css,
 	'tablet_css' => $tablet_css,
 	'mobile_css' => $mobile_css,
-	'selector' => ".block-editor-writing-flow",
+	'selector' => "body",
 	'variableName' => 'has-boxed',
 	'value' => blocksy_map_values([
 		'value' => $has_boxed,
@@ -117,7 +117,7 @@ blocksy_output_responsive([
 	'css' => $css,
 	'tablet_css' => $tablet_css,
 	'mobile_css' => $mobile_css,
-	'selector' => ".block-editor-writing-flow",
+	'selector' => "body",
 	'variableName' => 'has-wide',
 	'value' => blocksy_map_values([
 		'value' => $has_boxed,
@@ -131,7 +131,7 @@ blocksy_output_responsive([
 
 if (blocksy_some_device($has_boxed, 'boxed')) {
 	blocksy_output_background_css([
-		'selector' => '.block-editor-writing-flow',
+		'selector' => 'body',
 		'css' => $css,
 		'tablet_css' => $tablet_css,
 		'mobile_css' => $mobile_css,
@@ -154,7 +154,7 @@ if (blocksy_some_device($has_boxed, 'boxed')) {
 		'css' => $css,
 		'tablet_css' => $tablet_css,
 		'mobile_css' => $mobile_css,
-		'selector' => '.block-editor-writing-flow',
+		'selector' => 'body',
 		'property' => 'boxed-content-spacing',
 		'value' => blocksy_akg_or_customizer(
 			'boxed_content_spacing',
@@ -189,7 +189,7 @@ if (blocksy_some_device($has_boxed, 'boxed')) {
 		'css' => $css,
 		'tablet_css' => $tablet_css,
 		'mobile_css' => $mobile_css,
-		'selector' => '.block-editor-writing-flow',
+		'selector' => 'body',
 		'property' => 'border-radius',
 		'value' => blocksy_akg_or_customizer(
 			'content_boxed_radius',
@@ -208,7 +208,7 @@ if (blocksy_some_device($has_boxed, 'boxed')) {
 		'css' => $css,
 		'tablet_css' => $tablet_css,
 		'mobile_css' => $mobile_css,
-		'selector' => '.block-editor-writing-flow',
+		'selector' => 'body',
 		'value' => blocksy_akg_or_customizer(
 			'content_boxed_shadow',
 			$source,
@@ -228,7 +228,7 @@ if (blocksy_some_device($has_boxed, 'boxed')) {
 	]);
 } else {
 	$css->put(
-		'.block-editor-writing-flow',
+		'body',
 		'background-color: transparent'
 	);
 }

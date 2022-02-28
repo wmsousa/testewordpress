@@ -144,25 +144,105 @@ const BuilderRoot = ({
 	)
 
 	const builderValueDispatch = useCallback(
-		(payload) =>
-			builderValueDispatchInternal({
-				...payload,
-				onBuilderValueChange,
-			}),
-		[builderValueDispatchInternal, onBuilderValueChange]
+		(action) => {
+			let newState = builderReducer(builderValueCollection, action)
+
+			if (action.type === 'ITEM_VALUE_ON_CHANGE') {
+				const {
+					id,
+					optionId,
+					optionValue,
+					values = {},
+				} = action.payload
+
+				const builderValue =
+					newState.sections.find(
+						({ id }) => id === newState.__forced_static_header__
+					) || newState.sections[0]
+
+				let items = builderValue.items
+
+				if (
+					id === 'logo' &&
+					optionId === 'custom_logo' &&
+					builderValue.id === 'type-1'
+				) {
+					wp.customize &&
+						wp.customize('custom_logo')(
+							optionValue
+								? optionValue.desktop
+									? optionValue.desktop
+									: optionValue
+								: ''
+						)
+				}
+
+				wp.customize.previewer &&
+					wp.customize.previewer.send(
+						'ct:header:receive-value-update',
+						{
+							itemId: id,
+							optionId,
+							optionValue,
+							futureItems: builderValue.items,
+							values: {
+								...(
+									items.find(({ id: _id }) => id === _id) || {
+										values: {},
+									}
+								).values,
+								...values,
+								[optionId]: optionValue,
+							},
+						}
+					)
+			}
+
+			if (action.type === 'BUILDER_GLOBAL_SETTING_ON_CHANGE') {
+				const { optionId, optionValue, values = {} } = action.payload
+
+				const builderValue =
+					newState.sections.find(
+						({ id }) => id === newState.__forced_static_header__
+					) || newState.sections[0]
+
+				wp.customize.previewer &&
+					wp.customize.previewer.send(
+						'ct:header:receive-value-update',
+						{
+							itemId: 'global',
+							optionId,
+							optionValue,
+							values: {
+								...builderValue.settings,
+								...values,
+								[optionId]: optionValue,
+							},
+						}
+					)
+			}
+
+			onBuilderValueChange(newState)
+
+			builderValueDispatchInternal(action)
+		},
+		[
+			builderValueDispatchInternal,
+			onBuilderValueChange,
+			builderValueCollection,
+		]
 	)
 
 	const setList = useCallback(
 		(lists) =>
 			builderValueDispatch({
 				type: 'SET_LIST',
-				onBuilderValueChange,
 				payload: {
 					currentView,
 					lists,
 				},
 			}),
-		[builderValueDispatch, currentView, onBuilderValueChange]
+		[builderValueDispatch, currentView]
 	)
 
 	return (

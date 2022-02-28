@@ -35,6 +35,7 @@
 	> div {
 		display: inline-flex;
 		flex-wrap: wrap;
+		justify-content: var(--horizontal-alignment);
 		margin-top: calc(var(--spacing, 15px) * -1);
 		margin-left: calc(var(--spacing, 15px) / -2);
 		margin-right: calc(var(--spacing, 15px) / -2);

@@ -35,6 +35,14 @@ function furthest(el, s) {
 	return nodes[nodes.length - 1]
 }
 
+const isIosDevice =
+	typeof window !== 'undefined' &&
+	window.navigator &&
+	window.navigator.platform &&
+	(/iP(ad|hone|od)/.test(window.navigator.platform) ||
+		(window.navigator.platform === 'MacIntel' &&
+			window.navigator.maxTouchPoints > 1))
+
 const getPreferedPlacementFor = (el) => {
 	const farmost = furthest(el, 'li.menu-item')
 
@@ -99,8 +107,19 @@ const openSubmenu = (e) => {
 		el.matches('.ct-toggle-dropdown-desktop-ghost')
 	)
 
-	childIndicator.setAttribute('aria-expanded', 'true')
-	childIndicator.setAttribute('aria-label', ct_localizations.collapse_submenu)
+	if (!childIndicator) {
+		childIndicator = li.firstElementChild
+	}
+
+	if (childIndicator) {
+		childIndicator.setAttribute('aria-expanded', 'true')
+		if (childIndicator.tagName.toLowerCase() === 'button') {
+			childIndicator.setAttribute(
+				'aria-label',
+				ct_localizations.collapse_submenu
+			)
+		}
+	}
 
 	mouseenterHandler({ target: li })
 }
@@ -113,8 +132,20 @@ const closeSubmenu = (e) => {
 		el.matches('.ct-toggle-dropdown-desktop-ghost')
 	)
 
-	childIndicator.setAttribute('aria-expanded', 'false')
-	childIndicator.setAttribute('aria-label', ct_localizations.expand_submenu)
+	if (!childIndicator) {
+		childIndicator = li.firstElementChild
+	}
+
+	if (childIndicator) {
+		childIndicator.setAttribute('aria-expanded', 'false')
+		if (childIndicator.tagName.toLowerCase() === 'button') {
+			childIndicator.setAttribute(
+				'aria-label',
+				ct_localizations.expand_submenu
+			)
+		}
+	}
+
 	setTimeout(() => {
 		;[...li.querySelectorAll('[data-submenu]')].map((el) => {
 			el.removeAttribute('data-submenu')
@@ -156,12 +187,119 @@ export const mountMenuLevel = (menuLevel, args = {}) => {
 				el.matches('.ct-toggle-dropdown-desktop-ghost')
 			)
 
+			let hasClickInteraction = el.matches(
+				'[data-interaction*="click"] *'
+			)
+
+			if (!hasClickInteraction) {
+				el.addEventListener('mouseenter', (e) => {
+					// So that mouseenter event is catched before the open itself
+					if (isIosDevice) {
+						openSubmenu({ target: el.firstElementChild })
+					} else {
+						setTimeout(() => {
+							openSubmenu({ target: el.firstElementChild })
+						})
+					}
+
+					e.target
+						.closest('li')
+						.addEventListener('focusout', (evt) => {
+							if (
+								!e.target
+									.closest('li')
+									.contains(evt.relatedTarget)
+							) {
+								closeSubmenu(e)
+							}
+						})
+
+					e.target.closest('li').addEventListener(
+						'mouseleave',
+						() => {
+							closeSubmenu({ target: el.firstElementChild })
+						},
+						{ once: true }
+					)
+				})
+
+				el.addEventListener('click', (e) => {
+					if (!el.classList.contains('ct-active')) {
+						e.preventDefault()
+					}
+				})
+			}
+
+			if (hasClickInteraction) {
+				let itemTarget = el.matches('[data-interaction*="item"] *')
+					? el.firstElementChild
+					: el.firstElementChild.querySelector(
+							'.ct-toggle-dropdown-desktop'
+					  )
+
+				if (!itemTarget.hasEventListener) {
+					itemTarget.hasEventListener = true
+					itemTarget.addEventListener('click', (e) => {
+						e.preventDefault()
+
+						if (
+							e.target
+								.closest('li')
+								.classList.contains('ct-active')
+						) {
+							closeSubmenu(e)
+						} else {
+							openSubmenu(e)
+
+							if (isIosDevice) {
+								e.target.closest('li').addEventListener(
+									'mouseleave',
+									() => {
+										closeSubmenu({
+											target: el.firstElementChild,
+										})
+									},
+									{ once: true }
+								)
+							}
+
+							// Add the event a bit later
+							setTimeout(() => {
+								document.addEventListener(
+									'click',
+									(evt) => {
+										if (
+											!e.target
+												.closest('li')
+												.contains(evt.target)
+										) {
+											closeSubmenu(e)
+										}
+									},
+									{
+										once: true,
+									}
+								)
+							})
+
+							e.target
+								.closest('li')
+								.addEventListener('focusout', (evt) => {
+									if (
+										!e.target
+											.closest('li')
+											.contains(evt.relatedTarget)
+									) {
+										closeSubmenu(e)
+									}
+								})
+						}
+					})
+				}
+			}
+
 			if (childIndicator && !childIndicator.hasEventListener) {
 				childIndicator.hasEventListener = true
-
-				let hasClickInteraction = childIndicator.matches(
-					'[data-interaction*="click"] *'
-				)
 
 				childIndicator.addEventListener('click', (e) => {
 					if (
@@ -184,68 +322,6 @@ export const mountMenuLevel = (menuLevel, args = {}) => {
 							})
 					}
 				})
-
-				if (!hasClickInteraction) {
-					childIndicator
-						.closest('li')
-						.addEventListener('mouseenter', (e) => {
-							openSubmenu({ target: childIndicator })
-
-							e.target
-								.closest('li')
-								.addEventListener('focusout', (evt) => {
-									if (
-										!e.target
-											.closest('li')
-											.contains(evt.relatedTarget)
-									) {
-										closeSubmenu(e)
-									}
-								})
-
-							e.target.closest('li').addEventListener(
-								'mouseleave',
-								() => {
-									closeSubmenu({ target: childIndicator })
-								},
-								{ once: true }
-							)
-						})
-				} else {
-					let itemTarget = childIndicator.matches(
-						'[data-interaction*="item"] *'
-					)
-						? childIndicator.previousElementSibling
-						: childIndicator.previousElementSibling.querySelector(
-								'.ct-toggle-dropdown-desktop'
-						  )
-
-					itemTarget.addEventListener('click', (e) => {
-						e.preventDefault()
-
-						if (
-							e.target
-								.closest('li')
-								.classList.contains('ct-active')
-						) {
-							closeSubmenu(e)
-						} else {
-							openSubmenu(e)
-
-							e.target
-								.closest('li')
-								.addEventListener('focusout', (evt) => {
-									if (
-										!e.target
-											.closest('li')
-											.contains(evt.relatedTarget)
-									) {
-										closeSubmenu(e)
-									}
-								})
-						}
-					})
-				}
 			}
 		})
 }

@@ -55,6 +55,8 @@ class Blocksy_Custom_Post_Types {
 				'topic',
 				'reply',
 
+				'mailpoet_page',
+
 				'course',
 				'lesson',
 
@@ -77,6 +79,8 @@ class Blocksy_Custom_Post_Types {
 				'zion_template',
 				'pafe-fonts',
 				'pgc_simply_gallery',
+				'pdfviewer',
+				'da_image',
 
 				// 'sfwd-topic',
 				// 'sfwd-lessons',

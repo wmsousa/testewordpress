@@ -1,32 +1,73 @@
 import ctEvents from 'ct-events'
 import { select, useSelect } from '@wordpress/data'
-import { handleSingleVariableFor, mountAstCache } from 'customizer-sync-helpers'
+import {
+	updateVariableInStyleTags,
+	overrideStylesWithAst,
+} from 'customizer-sync-helpers'
 import { getValueFromInput } from 'blocksy-options'
 import { gutenbergVariables } from './variables'
-
-mountAstCache()
 
 let oldFn = wp.data.dispatch('core/edit-post')
 	.__experimentalSetPreviewDeviceType
 
 let oldFnToggleFeature = wp.data.dispatch('core/edit-post').toggleFeature
 
+const performSelectorsReplace = () => {
+	;[...document.querySelectorAll('style')].map((style) => {
+		if (style.innerText.indexOf('narrow-container-max-width') === -1) {
+			return
+		}
+
+		style.innerText = style.innerText.replace(
+			/\.editor-styles-wrapper \.edit-post-visual-editor__content-area \> div/g,
+			'.edit-post-visual-editor__content-area > div'
+		)
+
+		style.innerText = style.innerText.replace(
+			'.editor-styles-wrapperroot',
+			':root'
+		)
+	})
+
+	const maybeIframe = document.querySelector(
+		'.edit-post-visual-editor__content-area iframe'
+	)
+
+	if (maybeIframe) {
+		;[...maybeIframe.contentDocument.querySelectorAll('style')].map(
+			(style) => {
+				style.innerHTML = style.innerHTML.replace(
+					/\.editor-styles-wrapper \.edit-post-visual-editor__content-area \> div/g,
+					':root'
+				)
+
+				style.innerHTML = style.innerHTML.replace(
+					/\.edit-post-visual-editor__content-area \> div/g,
+					':root'
+				)
+
+				style.innerHTML = style.innerHTML.replace(
+					'.editor-styles-wrapperroot',
+					':root'
+				)
+			}
+		)
+	}
+}
+
 if (oldFn) {
+	setTimeout(() => {
+		performSelectorsReplace()
+	}, 1000)
+
 	wp.data.dispatch('core/edit-post').__experimentalSetPreviewDeviceType = (
 		...args
 	) => {
 		oldFn(...args)
-		document.body.classList.remove('ct-tablet-view', 'ct-mobile-view')
-		let device = args[0]
-
-		if (device.toLowerCase() === 'tablet') {
-			document.body.classList.add('ct-tablet-view')
-		}
-
-		if (device.toLowerCase() === 'mobile') {
-			document.body.classList.add('ct-tablet-view')
-			document.body.classList.add('ct-mobile-view')
-		}
+		setTimeout(() => {
+			overrideStylesWithAst()
+			performSelectorsReplace()
+		})
 	}
 
 	wp.data.dispatch('core/edit-post').toggleFeature = (...args) => {
@@ -119,35 +160,17 @@ export const handleMetaboxValueChange = (optionId, optionValue) => {
 	}
 
 	if (gutenbergVariables[optionId]) {
-		;(Array.isArray(gutenbergVariables[optionId])
-			? gutenbergVariables[optionId]
-			: [gutenbergVariables[optionId]]
-		).map((d) =>
-			handleSingleVariableFor(
-				d,
-				d.fullValue ? atts : optionValue,
-				({
-					replaceVariableInStyleTag,
-					value,
-					variableDescriptor,
-					device,
-				}) => {
-					replaceVariableInStyleTag(
-						{
-							...variableDescriptor,
-							selector: `${
-								device === 'tablet'
-									? '.ct-tablet-view '
-									: device === 'mobile'
-									? '.ct-mobile-view '
-									: ''
-							}${variableDescriptor.selector}`,
-						},
-						value,
-						'desktop'
-					)
-				}
-			)
-		)
+		updateVariableInStyleTags({
+			variableDescriptor: Array.isArray(gutenbergVariables[optionId])
+				? gutenbergVariables[optionId]
+				: [gutenbergVariables[optionId]],
+
+			value: optionValue,
+			fullValue: atts,
+			tabletMQ: '(max-width: 800px)',
+			mobileMQ: '(max-width: 370px)',
+		})
+
+		performSelectorsReplace()
 	}
 }

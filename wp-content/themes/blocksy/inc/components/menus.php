@@ -3,14 +3,13 @@
 if (! function_exists('blocksy_menu_get_child_svgs')) {
 	function blocksy_menu_get_child_svgs() {
 		return [
-			'default' => '<svg class="ct-icon" width="8" height="8" viewBox="0 0 15 15" aria-label="'  . __('Menu dropdown icon', 'blocksy') . '"><path d="M2.1,3.2l5.4,5.4l5.4-5.4L15,4.3l-7.5,7.5L0,4.3L2.1,3.2z"/></svg>',
+			'default' => '<svg class="ct-icon" width="8" height="8" viewBox="0 0 15 15"><path d="M2.1,3.2l5.4,5.4l5.4-5.4L15,4.3l-7.5,7.5L0,4.3L2.1,3.2z"/></svg>',
 
-			'mobile-toggle-type-1' => '<svg class="ct-icon toggle-icon-1" width="15" height="15" viewBox="0 0 15 15" aria-label="'  . __('Menu dropdown icon', 'blocksy') . '"><path d="M3.9,5.1l3.6,3.6l3.6-3.6l1.4,0.7l-5,5l-5-5L3.9,5.1z"/></svg>',
+			'mobile-toggle-type-1' => '<svg class="ct-icon toggle-icon-1" width="15" height="15" viewBox="0 0 15 15"><path d="M3.9,5.1l3.6,3.6l3.6-3.6l1.4,0.7l-5,5l-5-5L3.9,5.1z"/></svg>',
 
-			'mobile-toggle-type-2' => '<svg class="ct-icon toggle-icon-2" width="15" height="15" viewBox="0 0 15 15" aria-label="'  . __('Menu dropdown icon', 'blocksy') . '"><path d="M14.1,6.6H8.4V0.9C8.4,0.4,8,0,7.5,0S6.6,0.4,6.6,0.9v5.7H0.9C0.4,6.6,0,7,0,7.5s0.4,0.9,0.9,0.9h5.7v5.7C6.6,14.6,7,15,7.5,15s0.9-0.4,0.9-0.9V8.4h5.7C14.6,8.4,15,8,15,7.5S14.6,6.6,14.1,6.6z"/></svg>',
+			'mobile-toggle-type-2' => '<svg class="ct-icon toggle-icon-2" width="15" height="15" viewBox="0 0 15 15"><path d="M14.1,6.6H8.4V0.9C8.4,0.4,8,0,7.5,0S6.6,0.4,6.6,0.9v5.7H0.9C0.4,6.6,0,7,0,7.5s0.4,0.9,0.9,0.9h5.7v5.7C6.6,14.6,7,15,7.5,15s0.9-0.4,0.9-0.9V8.4h5.7C14.6,8.4,15,8,15,7.5S14.6,6.6,14.1,6.6z"/></svg>',
 
-			'mobile-toggle-type-3' => '<svg class="ct-icon toggle-icon-3" width="12" height="12" viewBox="0 0 15 15" aria-label="'  . __('Menu dropdown icon', 'blocksy') . '"><path d="M2.6,5.8L2.6,5.8l4.3,5C7,11,7.3,11.1,7.5,11.1S8,11,8.1,10.8l4.2-4.9l0.1-0.1c0.1-0.1,0.1-0.2,0.1-0.3
-	c0-0.3-0.2-0.5-0.5-0.5l0,0H3l0,0c-0.3,0-0.5,0.2-0.5,0.5C2.5,5.7,2.5,5.8,2.6,5.8z"/></svg>',
+			'mobile-toggle-type-3' => '<svg class="ct-icon toggle-icon-3" width="12" height="12" viewBox="0 0 15 15"><path d="M2.6,5.8L2.6,5.8l4.3,5C7,11,7.3,11.1,7.5,11.1S8,11,8.1,10.8l4.2-4.9l0.1-0.1c0.1-0.1,0.1-0.2,0.1-0.3c0-0.3-0.2-0.5-0.5-0.5l0,0H3l0,0c-0.3,0-0.5,0.2-0.5,0.5C2.5,5.7,2.5,5.8,2.6,5.8z"/></svg>',
 		];
 	}
 }
@@ -42,6 +41,10 @@ if (! function_exists('blocksy_main_menu_fallback')) {
 			$list_pages_args['blocksy_advanced_item'] = $args['blocksy_advanced_item'];
 		}
 
+		if (isset($args['skip_ghost'])) {
+			$list_pages_args['skip_ghost'] = $args['skip_ghost'];
+		}
+
 		$menu = wp_list_pages($list_pages_args);
 
 		if (! isset($child_indicator_type)) {
@@ -69,15 +72,17 @@ if (! function_exists('blocksy_main_menu_fallback')) {
 					blocksy_menu_get_child_svgs()[$child_indicator_type]
 				);
 
-				$link_button = blocksy_html_tag(
-					'button',
-					[
-						'class' => 'ct-toggle-dropdown-desktop-ghost',
-						'aria-label' => __('Expand dropdown menu', 'blocksy'),
-						'aria-expanded' => 'false'
-					],
-					''
-				);
+				if (! isset($args['skip_ghost'])) {
+					$link_button = blocksy_html_tag(
+						'button',
+						[
+							'class' => 'ct-toggle-dropdown-desktop-ghost',
+							'aria-label' => __('Expand dropdown menu', 'blocksy'),
+							'aria-expanded' => 'false'
+						],
+						''
+					);
+				}
 			} else {
 				$link_button = blocksy_html_tag(
 					'button',
@@ -224,15 +229,19 @@ if (! function_exists('blocksy_handle_nav_menu_start_el')) {
 				$toggle_ghost_class = 'ct-toggle-dropdown-mobile';
 			}
 
-			$toggle_ghost = blocksy_html_tag(
-				'button',
-				[
-					'class' => $toggle_ghost_class,
-					'aria-label' => __('Expand dropdown menu', 'blocksy'),
-					'aria-expanded' => 'false'
-				],
-				$toggle_ghost_content
-			);
+			$toggle_ghost = '';
+
+			if (! isset($args->skip_ghost)) {
+				$toggle_ghost = blocksy_html_tag(
+					'button',
+					[
+						'class' => $toggle_ghost_class,
+						'aria-label' => __('Expand dropdown menu', 'blocksy'),
+						'aria-expanded' => 'false'
+					],
+					$toggle_ghost_content
+				);
+			}
 
 			if (
 				isset($args->child_indicator_wrapper)
@@ -368,6 +377,10 @@ add_filter(
 
 		$attr['class'] = trim($attr['class']);
 
+		if (isset($args->skip_ghost)) {
+			$attr['aria-expanded'] = 'false';
+		}
+
 		return $attr;
 	},
 	5, 4
@@ -392,6 +405,10 @@ add_filter(
 		$attr['class'] .= ' ' . $class;
 
 		$attr['class'] = trim($attr['class']);
+
+		if (isset($args['skip_ghost'])) {
+			$attr['aria-expanded'] = 'false';
+		}
 
 		return $attr;
 	},

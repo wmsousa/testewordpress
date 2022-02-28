@@ -9,10 +9,10 @@
 }
 
 [data-label="left"] .ct-label {
-	margin-right: 0.7em;
+	margin-inline-end: 0.7em;
 }
 
 [data-label="right"] .ct-label {
 	order: 2;
-	margin-left: 0.7em;
+	margin-inline-start: 0.7em;
 }

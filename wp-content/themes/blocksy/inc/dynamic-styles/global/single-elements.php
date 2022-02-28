@@ -92,18 +92,39 @@ if (get_theme_mod($prefix . '_has_share_box', 'no') === 'yes') {
 	}
 
 
-
 	if ($share_box_type === 'type-2') {
+
+		$text_share_box_alignment = get_theme_mod($prefix . '_share_box_alignment', 'CT_CSS_SKIP_RULE');
+
+		$share_box_alignment = blocksy_map_values([
+			'value' => $text_share_box_alignment,
+			'map' => [
+				'left' => 'flex-start',
+				'right' => 'flex-end'
+			]
+		]);
+
 		blocksy_output_responsive([
 			'css' => $css,
 			'tablet_css' => $tablet_css,
 			'mobile_css' => $mobile_css,
 			'selector' => blocksy_prefix_selector('.ct-share-box[data-type="type-2"]', $prefix),
 			'variableName' => 'horizontal-alignment',
-			'value' => get_theme_mod($prefix . '_share_box_alignment', 'CT_CSS_SKIP_RULE'),
+			'value' => $share_box_alignment,
+			'unit' => '',
+		]);
+
+		blocksy_output_responsive([
+			'css' => $css,
+			'tablet_css' => $tablet_css,
+			'mobile_css' => $mobile_css,
+			'selector' => blocksy_prefix_selector('.ct-share-box[data-type="type-2"]', $prefix),
+			'variableName' => 'text-horizontal-alignment',
+			'value' => $text_share_box_alignment,
 			'unit' => '',
 		]);
 	}
+
 
 	$share_box2_colors = get_theme_mod($prefix. '_share_box2_colors', 'custom');
 

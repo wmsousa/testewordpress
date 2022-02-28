@@ -372,8 +372,6 @@ export const handleResponsiveSwitch = ({
 	}),
 })
 
-export const isVisibleFor = (data) => data.mobile || data.tablet || data.desktop
-
 export const responsiveClassesFor = (data, el) => {
 	el.classList.remove('ct-hidden-sm', 'ct-hidden-md', 'ct-hidden-lg')
 

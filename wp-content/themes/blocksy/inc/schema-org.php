@@ -70,7 +70,7 @@ if (! function_exists('blocksy_schema_org_definitions')) {
 			if (is_page()) {
 				$value = [
 					'itemscope' => 'itemscope',
-					'itemtype' => 'http://schema.org/WebPage'
+					'itemtype' => 'https://schema.org/WebPage'
 				];
 			} else if (function_exists('is_product') && is_product()) {
 				$value = [
@@ -124,20 +124,20 @@ if (! function_exists('blocksy_schema_org_definitions')) {
 		if ($place === 'navigation') {
 			$value = [
 				'itemscope' => '',
-				'itemtype' => 'http://schema.org/SiteNavigationElement'
+				'itemtype' => 'https://schema.org/SiteNavigationElement'
 			];
 		}
 
 		// Main
 		if ($place === 'blog') {
 			// return '';
-			// return 'itemtype="http://schema.org/Blog" itemscope';
+			// return 'itemtype="https://schema.org/Blog" itemscope';
 		}
 
 		if ($place === 'breadcrumb') {
 			$value = [
 				'itemscope' => '',
-				'itemtype' => 'http://schema.org/BreadcrumbList'
+				'itemtype' => 'https://schema.org/BreadcrumbList'
 			];
 		}
 
@@ -145,7 +145,7 @@ if (! function_exists('blocksy_schema_org_definitions')) {
 			$value = [
 				'itemprop' => 'itemListElement',
 				'itemscope' => '',
-				'itemtype' => 'http://schema.org/ListItem'
+				'itemtype' => 'https://schema.org/ListItem'
 			];
 		}
 
@@ -264,7 +264,7 @@ if (! function_exists('blocksy_schema_org_definitions')) {
 		if ($place === 'breadcrumb_list') {
 			$value = [
 				'itemscope' => '',
-				'itemtype' => "http://schema.org/BreadcrumbList"
+				'itemtype' => "https://schema.org/BreadcrumbList"
 			];
 		}
 
@@ -272,7 +272,7 @@ if (! function_exists('blocksy_schema_org_definitions')) {
 			$value = [
 				'itemscope' => '',
 				'itemprop' => "itemListElement",
-				'itemtype' => "http://schema.org/ListItem"
+				'itemtype' => "https://schema.org/ListItem"
 			];
 		}
 

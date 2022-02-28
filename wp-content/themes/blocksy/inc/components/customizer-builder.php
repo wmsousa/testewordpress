@@ -107,55 +107,57 @@ class Blocksy_Customizer_Builder {
 		}
 
 		foreach ($all_items as $item) {
-			if (! $render->contains_item($item['id'], $item['is_primary'])) {
-				continue;
-			}
+			if ($item) {
+				if (! $render->contains_item($item['id'], $item['is_primary'])) {
+					continue;
+				}
 
-			if (! file_exists($item['path'] . '/dynamic-styles.php')) {
-				continue;
-			}
+				if (! file_exists($item['path'] . '/dynamic-styles.php')) {
+					continue;
+				}
 
-			$css_args['atts'] = $render->get_item_data_for($item['id']);
-			$css_args['item'] = $item;
+				$css_args['atts'] = $render->get_item_data_for($item['id']);
+				$css_args['item'] = $item;
 
-			$row_id = null;
+				$row_id = null;
 
-			if (isset($item['is_primary']) && $item['is_primary']) {
-				$row_id = $item['id'];
-				$css_args['primary_item'] = $render->get_primary_item($item['id']);
-			} else {
-				if (isset($current_section['desktop'])) {
-					foreach ($current_section['desktop'] as $row) {
-						foreach ($row['placements'] as $single_placement) {
-							if (in_array($item['id'], $single_placement['items'])) {
-								$row_id = $row['id'];
+				if (isset($item['is_primary']) && $item['is_primary']) {
+					$row_id = $item['id'];
+					$css_args['primary_item'] = $render->get_primary_item($item['id']);
+				} else {
+					if (isset($current_section['desktop'])) {
+						foreach ($current_section['desktop'] as $row) {
+							foreach ($row['placements'] as $single_placement) {
+								if (in_array($item['id'], $single_placement['items'])) {
+									$row_id = $row['id'];
+								}
+							}
+						}
+					}
+
+					if (isset($current_section['mobile'])) {
+						foreach ($current_section['mobile'] as $row) {
+							foreach ($row['placements'] as $single_placement) {
+								if (in_array($item['id'], $single_placement['items'])) {
+									$row_id = $row['id'];
+								}
 							}
 						}
 					}
 				}
 
-				if (isset($current_section['mobile'])) {
-					foreach ($current_section['mobile'] as $row) {
-						foreach ($row['placements'] as $single_placement) {
-							if (in_array($item['id'], $single_placement['items'])) {
-								$row_id = $row['id'];
-							}
-						}
-					}
-				}
-			}
-
-			blocksy_theme_get_dynamic_styles(apply_filters(
-				'blocksy:' . $args['panel_type'] . ':dynamic-styles-args',
-				array_merge([
-					'section_id' => $args['section_id'],
-					'row_id' => $row_id,
-					'path' => $item['path'] . '/dynamic-styles.php',
-					'root_selector' => $render->get_root_selector($item),
-					'root_selector_header' => $render->get_root_selector(),
-					'column_selector' => $render->get_column_selector($item)
-				], $css_args)
-			));
+				blocksy_theme_get_dynamic_styles(apply_filters(
+					'blocksy:' . $args['panel_type'] . ':dynamic-styles-args',
+					array_merge([
+						'section_id' => $args['section_id'],
+						'row_id' => $row_id,
+						'path' => $item['path'] . '/dynamic-styles.php',
+						'root_selector' => $render->get_root_selector($item),
+						'root_selector_header' => $render->get_root_selector(),
+						'column_selector' => $render->get_column_selector($item)
+					], $css_args)
+				));
+			};
 		}
 
 		$path = apply_filters(

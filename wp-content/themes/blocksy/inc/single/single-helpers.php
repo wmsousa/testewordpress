@@ -420,7 +420,9 @@ function blocksy_author_box() {
 			</<?php echo $wrapper_tag ?>>
 
 			<div class="author-box-bio">
-				<?php the_author_meta('description'); ?>
+				<?php //the_author_meta('description'); ?>
+
+				<?php echo wp_kses_post(wpautop(get_the_author_meta('description'))); ?>
 			</div>
 
 			<?php

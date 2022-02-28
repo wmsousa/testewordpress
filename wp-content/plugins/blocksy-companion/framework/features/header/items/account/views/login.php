@@ -51,7 +51,8 @@ if ($loggedin_media === 'avatar') {
 		[
 			'img_atts' => [
 				'width' => $avatar_size,
-				'height' => $avatar_size
+				'height' => $avatar_size,
+				'aria-hidden' => 'true',
 			]
 		]
 	);
@@ -86,9 +87,7 @@ $attr['aria-label'] = $loggedin_label;
 
 echo '<a ' . blocksy_attr_to_html($attr) . '>';
 
-if (! empty($loggedin_label) && (blocksy_some_device(
-	$loggedin_account_label_visibility
-) || is_customize_preview())) {
+if (! empty($loggedin_label)) {
 	echo '<span class="' . trim('ct-label ' . blocksy_visibility_classes(
 		$loggedin_account_label_visibility
 	)) . '">';

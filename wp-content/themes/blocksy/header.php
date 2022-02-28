@@ -9,9 +9,7 @@
  * @package Blocksy
  */
 
-?>
-
-<!doctype html>
+?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
 	<?php do_action('blocksy:head:start') ?>

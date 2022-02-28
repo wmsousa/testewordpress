@@ -163,7 +163,7 @@ const Typography = ({
 						ref={fontFamilyRef}>
 						<span>
 							{value.family === 'Default'
-								? 'Default Family'
+								? __('Default Family', 'blocksy')
 								: familyForDisplay(value.family)}
 						</span>
 					</span>

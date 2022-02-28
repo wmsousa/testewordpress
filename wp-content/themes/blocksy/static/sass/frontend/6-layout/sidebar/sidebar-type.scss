@@ -95,7 +95,7 @@ aside {
 	[data-sidebar='right'] {
 		[data-type='type-3'],
 		[data-type='type-4'] {
-			padding-left: var(--sidebar-inner-spacing, 35px);
+			padding-inline-start: var(--sidebar-inner-spacing, 35px);
 
 			&:after {
 				left: 0;
@@ -106,7 +106,7 @@ aside {
 	[data-sidebar='left'] {
 		[data-type='type-3'],
 		[data-type='type-4'] {
-			padding-right: var(--sidebar-inner-spacing, 35px);
+			padding-inline-end: var(--sidebar-inner-spacing, 35px);
 
 			&:after {
 				right: 0;

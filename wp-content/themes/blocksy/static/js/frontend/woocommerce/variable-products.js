@@ -148,11 +148,15 @@ const performInPlaceUpdate = ({
 }) => {
 	const currentImage = currentVariationObj
 		? { id: currentVariationObj.image_id, ...currentVariationObj.image }
-		: nextVariationObj.blocksy_original_image
+		: (nextVariationObj || {}).blocksy_original_image
 
 	const nextImage = nextVariationObj
 		? { id: nextVariationObj.image_id, ...nextVariationObj.image }
-		: currentVariationObj.blocksy_original_image
+		: (currentVariationObj || {}).blocksy_original_image
+
+	if (!nextImage) {
+		return
+	}
 
 	if (parseFloat(nextImage.id) === parseFloat(currentImage.id)) {
 		return

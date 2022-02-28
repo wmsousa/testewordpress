@@ -6902,7 +6902,8 @@
 
             $this->clear_cron_data( $name );
 
-            if ( 0 < $cron_blog_id ) {
+            if ( 0 < $cron_blog_id && function_exists('switch_to_blog') ) {
+                
                 switch_to_blog( $cron_blog_id );
             }
 
@@ -6912,7 +6913,7 @@
 
             wp_clear_scheduled_hook( $this->get_action_tag( $action_tag ) );
 
-            if ( 0 < $cron_blog_id ) {
+            if ( 0 < $cron_blog_id && function_exists('restore_current_blog') ) {
                 restore_current_blog();
             }
         }
@@ -6944,7 +6945,7 @@
                 $cron_data->blog_id :
                 0;
 
-            if ( 0 < $cron_blog_id ) {
+            if ( 0 < $cron_blog_id && function_exists('switch_to_blog')) {
                 switch_to_blog( $cron_blog_id );
             }
 
@@ -6954,7 +6955,8 @@
 
             $next_scheduled = wp_next_scheduled( $this->get_action_tag( $action_tag ) );
 
-            if ( 0 < $cron_blog_id ) {
+            if ( 0 < $cron_blog_id && function_exists('restore_current_blog')) {
+                
                 restore_current_blog();
             }
 

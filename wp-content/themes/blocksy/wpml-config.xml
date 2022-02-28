@@ -1,4 +1,8 @@
 <wpml-config>
+	<custom-fields>
+		<custom-field action="copy">blocksy_post_meta_options</custom-field>
+	</custom-fields>
+
 	<admin-texts>
 		<key name="theme_mods_blocksy">
 			<key name="blog_load_more_label" />
